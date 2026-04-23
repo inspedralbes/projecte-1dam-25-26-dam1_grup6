@@ -10,7 +10,6 @@
 <body>
     <h1>Pàgina inicial</h1>
     <p>Aquesta pàgina inclou codi php</p>
-    <p>Quesito</p>
     <?php
     echo "<h2>Hola, món!</h2>";
     echo "<p>Hora actual: " . date("H:i:s") . "</p>";
