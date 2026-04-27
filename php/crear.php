@@ -52,7 +52,7 @@ function crear_casa($conn)
 </head>
 
 <body>
-    <h1>Crear una casa</h1>
+    <h1>Registrar incidencia</h1>
     <?php
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -64,10 +64,20 @@ function crear_casa($conn)
         ?>
         <form method="POST" action="crear.php">
             <fieldset>
-                <legend>CASA</legend>
-                <label for="nom">Nom de la casa:</label>
-                <input type="text" id="nom" name="nom">
-                <input type="submit" value="Crear">
+                <legend>Registrar incidencia</legend>
+                <label for="nom">ID Incidencia:</label>
+
+                <br><br>
+                <label for="nom">Departament:</label>
+                <input type="text" id="departament" name="departament">
+                <br><br>
+                <label for="nom">Data:</label>
+
+                <br><br>
+                <label for="nom">Descripció:</label>
+                <input type="text" id="descripcio" name="descripcio">
+                <br><br>
+                <input type="submit" value="Registrar">
             </fieldset>
         </form>
 
