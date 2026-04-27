@@ -9,34 +9,31 @@ require_once 'connexio.php';
  * @param mixed $conn
  * @return void
  */
-function crear_casa($conn)
+function registrar_inc($conn)
 {
     // Obtenir el nom de la casa del formulari
-    $nom = $_POST['nom'];
-
+$departament = $_POST["departament"];
+$descripcio = $_POST["descripcio"];
     // Comprovar si el nom no està buit
     // Si l'html està ben escrit això no podria passar en els usuaris normals
     // Igualment SEMPRE s'ha de comprovar tot al backend ja que no tots els usuaris
     // són "bones persones" i des de les web tools es pot canviar tot el front per exemple.
-    if (empty($nom)) {
-        echo "<p class='error'>El nom de la casa no pot estar buit.</p>";
-        return;
-    }
 
     // Preparar la consulta SQL per inserir una nova casa
-    $sql = "INSERT INTO cases (name) VALUES (?)";
-    $stmt = $conn->prepare($sql);  //La variable $conn la tenim per haver inclòs el fitxer connexio.php
-    $stmt->bind_param("s", $nom);
+    $sentencia1= $conn->prepare("INSERT INTO DEPARTAMENT
+    (nom)
+    VALUES
+    (?)");
 
-    // Executar la consulta i comprovar si s'ha inserit correctament
-    if ($stmt->execute()) {
-        echo "<p class='info'>Casa creada amb èxit!</p>";
-    } else {
-        echo "<p class='error'>Error al crear la casa: " . htmlspecialchars($stmt->error) . "</p>";
-    }
+    $sentencia2= $conn->prepare("INSERT INTO INCIDENCIA
+    (descripcio)
+    VALUES
+    (?)");
 
-    // Tancar la declaració i la connexió
-    $stmt->close();
+    $sentencia1->bind_param("s", $departament);
+    $sentencia1->execute();
+    $sentencia2->bind_param("s", $descripcio);
+    $sentencia2->execute();
 
 }
 
@@ -57,7 +54,7 @@ function crear_casa($conn)
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Si el formulari s'ha enviatc (mètode POST), cridem a la funció per crear la casa
-        crear_casa($conn);
+        registrar_inc($conn);
     } else {
         //Mostrem el formulari per crear una nova casa
         //Tanquem el php per poder escriure el codi HTML de forma més còmoda.
@@ -65,16 +62,16 @@ function crear_casa($conn)
         <form method="POST" action="crear.php">
             <fieldset>
                 <legend>Registrar incidencia</legend>
-                <label for="nom">ID Incidencia:</label>
+                <label>ID Incidencia:</label>
 
                 <br><br>
-                <label for="nom">Departament:</label>
+                <label>Departament:</label>
                 <input type="text" id="departament" name="departament">
                 <br><br>
-                <label for="nom">Data:</label>
+                <label>Data:</label>
 
                 <br><br>
-                <label for="nom">Descripció:</label>
+                <label>Descripció:</label>
                 <input type="text" id="descripcio" name="descripcio">
                 <br><br>
                 <input type="submit" value="Registrar">
