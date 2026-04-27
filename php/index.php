@@ -10,9 +10,9 @@
     <h1>GI3P Gestor Incidencias DAM</h1>
     <p>Selecció d'usuari</p>
     <div id = "menu">
-        <a href="">Profesor</a>
-        <a href="">Tecnic</a>
-        <a href="">Administrador</a>
+        <a href="llistar.php">Profesor</a>
+        <a href="llistar.php">Tecnic</a>
+        <a href="llistar.php">Administrador</a>
     </div>
     
 </body>
