@@ -1,20 +1,32 @@
+SET NAMES utf8mb4;
+
+CREATE DATABASE IF NOT EXISTS proyecto
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+GRANT ALL PRIVILEGES ON proyecto.* TO 'usuari'@'%';
+FLUSH PRIVILEGES;
+
+USE proyecto;
+
+
 CREATE TABLE DEPARTAMENT(
     idDepartament INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE TECNIC(
-    idTecnic INT PRIMARY KEY,
+    idTecnic INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE TIPOLOGIA(
-    idTipologia INT PRIMARY KEY,
+    idTipologia INT AUTO_INCREMENT PRIMARY KEY,
     nomTipologia VARCHAR(100)
 );
 
 CREATE TABLE INCIDENCIA(
-    idIncidencia INT PRIMARY KEY,
+    idIncidencia INT AUTO_INCREMENT PRIMARY KEY,
     descripcio VARCHAR(2000),
     data TIMESTAMP,
     dataFinalitzacio DATE,
@@ -27,7 +39,7 @@ CREATE TABLE INCIDENCIA(
 );
 
 CREATE TABLE ACTUACIO(
-    idActuacion INT PRIMARY KEY,
+    idActuacion INT AUTO_INCREMENT PRIMARY KEY,
     descripcio VARCHAR(1000) NOT NULL,
     visible INT(1) NOT NULL,
     data TIMESTAMP,
