@@ -28,7 +28,7 @@ CREATE TABLE TIPOLOGIA(
 CREATE TABLE INCIDENCIA(
     idIncidencia INT AUTO_INCREMENT PRIMARY KEY,
     descripcio VARCHAR(2000),
-    data TIMESTAMP,
+    data TIMESTAMP DEFAULT SYSTIMESTAMP,
     dataFinalitzacio DATE,
     idTecnic INT,
     idDepartament INT,
