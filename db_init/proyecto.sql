@@ -1,5 +1,17 @@
+SET NAMES utf8mb4;
+
+CREATE DATABASE IF NOT EXISTS proyecto
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+GRANT ALL PRIVILEGES ON proyecto.* TO 'usuari'@'%';
+FLUSH PRIVILEGES;
+
+USE proyecto;
+
+
 CREATE TABLE DEPARTAMENT(
-    idDepartament INT PRIMARY KEY,
+    idDepartament INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL
 );
 
