@@ -20,19 +20,13 @@ $descripcio = $_POST["descripcio"];
     // són "bones persones" i des de les web tools es pot canviar tot el front per exemple.
 
     // Preparar la consulta SQL per inserir una nova casa
-    $sentencia1= $conn->prepare("INSERT INTO DEPARTAMENT
-    (nom)
-    VALUES
-    (?)");
 
     $sentencia2= $conn->prepare("INSERT INTO INCIDENCIA
-    (descripcio)
+    (descripcio, idDepartament)
     VALUES
-    (?)");
+    (?, ?)");
 
-    $sentencia1->bind_param("s", $departament);
-    $sentencia1->execute();
-    $sentencia2->bind_param("s", $descripcio);
+    $sentencia2->bind_param("si", $descripcio, $departament);
     $sentencia2->execute();
 
 }
@@ -65,14 +59,20 @@ $descripcio = $_POST["descripcio"];
                 <label>ID Incidencia:</label>
 
                 <br><br>
-                <label>Departament:</label>
-                <input type="text" id="departament" name="departament">
+         <select name="departament" id="departament" required>
+             <option value="" selected>-- Selecciona departament--</option>
+             <option value="1">Mates</option>
+             <option value="2">Fisica</option>
+             <option value="3">Quimica</option>
+             <option value="4">Lengua</option>
+             <option value="5">Informatica</option>
+         </select>
                 <br><br>
                 <label>Data:</label>
 
                 <br><br>
                 <label>Descripció:</label>
-                <input type="text" id="descripcio" name="descripcio">
+                <input type="text" id="descripcio" name="descripcio" required>
                 <br><br>
                 <input type="submit" value="Registrar">
             </fieldset>
