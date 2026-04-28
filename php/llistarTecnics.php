@@ -24,11 +24,12 @@ require_once 'connexio.php';
 
     // Comprovar si hi ha resultats
     if ($result->num_rows > 0) {
-    
+
         // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
         while ($row = $result->fetch_assoc()) {
             echo "<p>ID: " . $row["idIncidencia"] . " - Nom: " . htmlspecialchars($row["descripcio"]) . "";
-            echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a></p>";
+            echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
+            echo " <a href='registrarAct.php?id=" . $row["idIncidencia"] . "'>Editar</a></p>";
         }
 
     } else {
