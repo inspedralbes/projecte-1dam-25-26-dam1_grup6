@@ -35,7 +35,7 @@ CREATE TABLE INCIDENCIA(
     idTipologia INT,
     FOREIGN KEY (idTecnic) REFERENCES TECNIC(idTecnic),
     FOREIGN KEY (idDepartament) REFERENCES DEPARTAMENT(idDepartament),
-    FOREIGN KEY (idTipologia) REFERENCES TIPOLOGIA(idTipologia)
+    FOREIGN KEY (idTipologia)db_data6 REFERENCES TIPOLOGIA(idTipologia)
 );
 
 CREATE TABLE ACTUACIO(
