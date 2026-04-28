@@ -49,9 +49,12 @@ function registrar_act($conn) {
                 <br><br>
                 <label>Temps:</label>
                 <input type="number" name="temps" id="temps" required>
+                <br><br>
+                <input type="submit" value="Registrar">
             </fieldset>
         </form>
 
-        
+
         <?php
     }
+    ?>
