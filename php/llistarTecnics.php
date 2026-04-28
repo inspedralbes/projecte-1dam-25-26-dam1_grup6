@@ -19,16 +19,16 @@ require_once 'connexio.php';
     <?php
 
     // Consulta SQL per obtenir totes les files de la taula 'cases'
-    $sql = "SELECT id_incidencia, descripcio, fecha FROM INCIDENCIA";
+    $sql = "SELECT idIncidencia, descripcio, fecha FROM INCIDENCIA";
     $result = $conn->query($sql);
 
     // Comprovar si hi ha resultats
     if ($result->num_rows > 0) {
-
+    
         // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
         while ($row = $result->fetch_assoc()) {
-            echo "<p>ID: " . $row["id_incidencia"] . " - Nom: " . htmlspecialchars($row["descripcio"]) . "";
-            echo " <a href='esborrar.php?id=" . $row["id_incidencia"] . "'>Esborrar</a></p>";
+            echo "<p>ID: " . $row["idIncidencia"] . " - Nom: " . htmlspecialchars($row["descripcio"]) . "";
+            echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a></p>";
         }
 
     } else {
