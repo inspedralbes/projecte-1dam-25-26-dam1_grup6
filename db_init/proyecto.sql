@@ -28,8 +28,9 @@ CREATE TABLE TIPOLOGIA(
 CREATE TABLE INCIDENCIA(
     idIncidencia INT AUTO_INCREMENT PRIMARY KEY,
     descripcio VARCHAR(2000),
-    data TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     dataFinalitzacio DATE,
+    prioritat ENUM('baja', 'media', 'alta'),
     idTecnic INT,
     idDepartament INT,
     idTipologia INT,
@@ -42,7 +43,7 @@ CREATE TABLE ACTUACIO(
     idActuacion INT AUTO_INCREMENT PRIMARY KEY,
     descripcio VARCHAR(1000) NOT NULL,
     visible INT(1) NOT NULL,
-    data TIMESTAMP,
+    fecha TIMESTAMP,
     temps INT NOT NULL,
     idIncidencia INT,
     FOREIGN KEY (idIncidencia) REFERENCES INCIDENCIA(idIncidencia)
