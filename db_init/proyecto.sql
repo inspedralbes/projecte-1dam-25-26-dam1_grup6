@@ -30,13 +30,13 @@ CREATE TABLE INCIDENCIA(
     descripcio VARCHAR(2000),
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     dataFinalitzacio DATE,
-    prioritat ENUM('baja', 'media', 'alta'),
+    prioritat ENUM('baja','media','alta'),
     idTecnic INT,
     idDepartament INT,
     idTipologia INT,
     FOREIGN KEY (idTecnic) REFERENCES TECNIC(idTecnic),
     FOREIGN KEY (idDepartament) REFERENCES DEPARTAMENT(idDepartament),
-    FOREIGN KEY (idTipologia)db_data6 REFERENCES TIPOLOGIA(idTipologia)
+    FOREIGN KEY (idTipologia) REFERENCES TIPOLOGIA(idTipologia)
 );
 
 CREATE TABLE ACTUACIO(
