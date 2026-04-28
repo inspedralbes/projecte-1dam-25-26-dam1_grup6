@@ -9,34 +9,25 @@ require_once 'connexio.php';
  * @param mixed $conn
  * @return void
  */
-function crear_casa($conn)
+function registrar_inc($conn)
 {
     // Obtenir el nom de la casa del formulari
-    $nom = $_POST['nom'];
-
+$departament = $_POST["departament"];
+$descripcio = $_POST["descripcio"];
     // Comprovar si el nom no està buit
     // Si l'html està ben escrit això no podria passar en els usuaris normals
     // Igualment SEMPRE s'ha de comprovar tot al backend ja que no tots els usuaris
     // són "bones persones" i des de les web tools es pot canviar tot el front per exemple.
-    if (empty($nom)) {
-        echo "<p class='error'>El nom de la casa no pot estar buit.</p>";
-        return;
-    }
 
     // Preparar la consulta SQL per inserir una nova casa
-    $sql = "INSERT INTO cases (name) VALUES (?)";
-    $stmt = $conn->prepare($sql);  //La variable $conn la tenim per haver inclòs el fitxer connexio.php
-    $stmt->bind_param("s", $nom);
 
-    // Executar la consulta i comprovar si s'ha inserit correctament
-    if ($stmt->execute()) {
-        echo "<p class='info'>Casa creada amb èxit!</p>";
-    } else {
-        echo "<p class='error'>Error al crear la casa: " . htmlspecialchars($stmt->error) . "</p>";
-    }
+    $sentencia2= $conn->prepare("INSERT INTO INCIDENCIA
+    (descripcio, idDepartament)
+    VALUES
+    (?, ?)");
 
-    // Tancar la declaració i la connexió
-    $stmt->close();
+    $sentencia2->bind_param("si", $descripcio, $departament);
+    $sentencia2->execute();
 
 }
 
@@ -52,22 +43,38 @@ function crear_casa($conn)
 </head>
 
 <body>
-    <h1>Crear una casa</h1>
+    <h1>Registrar incidencia</h1>
     <?php
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Si el formulari s'ha enviatc (mètode POST), cridem a la funció per crear la casa
-        crear_casa($conn);
+        registrar_inc($conn);
     } else {
         //Mostrem el formulari per crear una nova casa
         //Tanquem el php per poder escriure el codi HTML de forma més còmoda.
         ?>
         <form method="POST" action="crear.php">
             <fieldset>
-                <legend>CASA</legend>
-                <label for="nom">Nom de la casa:</label>
-                <input type="text" id="nom" name="nom">
-                <input type="submit" value="Crear">
+                <legend>Registrar incidencia</legend>
+                <label>ID Incidencia:</label>
+
+                <br><br>
+         <select name="departament" id="departament" required>
+             <option value="" selected>-- Selecciona departament--</option>
+             <option value="1">Mates</option>
+             <option value="2">Fisica</option>
+             <option value="3">Quimica</option>
+             <option value="4">Lengua</option>
+             <option value="5">Informatica</option>
+         </select>
+                <br><br>
+                <label>Data:</label>
+
+                <br><br>
+                <label>Descripció:</label>
+                <input type="text" id="descripcio" name="descripcio" required>
+                <br><br>
+                <input type="submit" value="Registrar">
             </fieldset>
         </form>
 
