@@ -86,7 +86,7 @@ $descripcio = $_POST["descripcio"];
     <div id="menu">
         <hr>
         <p><a href="index.php">Portada</a> </p>
-        <p><a href="llistar.php">Llistar</a></p>
+        <p><a href="llistarProfessors.php">Llistar</a></p>
         <p><a href="crear.php">Crear</a></p>
     </div>
 </body>
