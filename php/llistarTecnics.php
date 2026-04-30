@@ -3,6 +3,18 @@
 //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
 require_once 'connexio.php';
 // Un cop inclòs el fitxer connexio.php, ja podeu utilitzar la variable $conn per a fer les consultes a la base de dades.
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (isset($_POST["tecnic"])){
+    $tecnic = $_POST["tecnic"];
+    $sql = "SELECT idIncidencia, descripcio, fecha FROM INCIDENCIA WHERE idTecnic = ?";
+    $sentencia = $conn->prepare($sql);
+    $sentencia->bind_param("i", $tecnic);
+    $sentencia->execute();
+
+    $result = $sentencia->get_result();
+
+}
+}
 
 ?>
 <!DOCTYPE html>
@@ -16,12 +28,21 @@ require_once 'connexio.php';
 
 <body>
     <h1>Llistat de cases</h1>
+
+
+
+    <form method="POST" action="llistarTecnics.php">
+<select name="tecnic" id="tecnic" required>
+            <option value="" selected>-- Escull tecnic--</option>
+            <option value="1">Juan</option>
+            <option value="2">Alex</option>
+            <option value="3">Luis</option>
+    </select>
+            <input type="submit" value="Filtrar">
+</form>
+
+
     <?php
-
-    // Consulta SQL per obtenir totes les files de la taula 'cases'
-    $sql = "SELECT idIncidencia, descripcio, fecha FROM INCIDENCIA";
-    $result = $conn->query($sql);
-
     // Comprovar si hi ha resultats
     if ($result->num_rows > 0) {
 
