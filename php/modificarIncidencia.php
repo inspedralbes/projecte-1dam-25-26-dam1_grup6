@@ -2,15 +2,19 @@
 
 require_once 'connexio.php';
 
+if (!isset($_GET["id"])) {
+    exit("No hay idss");
+}
+
 function modificar_incidencia($conn) {
-    $incidencia = $_POST["incidencia"];
-    $prioritat = $_POST["prioritat"];
-    $tecnic = $_POST["tecnic"];
-    $tipus = $_POST["tipus"];
+    $incidencia = $_GET['id'];
+    $prioritat = $_POST['prioritat'];
+    $tecnic = $_POST['tecnic'];
+    $tipus = $_POST['tipus'];
 
 $sentenciaMod = $conn->prepare("UPDATE INCIDENCIA SET prioritat = ?, idTecnic = ?, idTipologia = ? WHERE idIncidencia = ?");
 
-$sentenciaMod->bind_param("sii", $prioritat, $tecnic, $tipus);
+$sentenciaMod->bind_param("siii", $prioritat, $tecnic, $tipus, $incidencia);
 $sentenciaMod->execute();
 }
 
@@ -32,21 +36,31 @@ $sentenciaMod->execute();
         modificar_incidencia($conn);
     } else {
         ?>
-        <form method="POST" action="modificarIncidencia.php">
+        <form method="POST" action="actualizar.php">
+            <input type="hidden" name="id" value="<?php echo $_GET["id"] ?>">
             <fieldset>
                 <legend>Modifica incidencia</legend>
                 <br><br>
-                <label>Incidencia</label>
-                <input type="integer" id="incidencia" name="incidencia">
+                <select name="tipus" id="tipus" required>
+                    <option value="" selected> -- Assignar tipus --</option>
+                    <option value="1">Xarxes</option>
+                    <option value="2">Software</option>
+                    <option value="3">Hardware</option>
+                </select>
                 <br><br>
-                <label>Prioritat</label>
-                <input type="text" id="prioritat" name="prioritat" required>
+                <select name="tecnic" id="tecnic" required>
+                    <option value="" selected>-- Asignar tecnic --</option>";
+                    <option value="1">Juan</option>
+                    <option value="2">Alex</option>
+                    <option value="3">Luis</option>
+                </select>
                 <br><br>
-                <label>Tecnic</label>
-                <input type="text" id="tecnic" name="tecnic" required>
-                <br><br>
-                <label>Tipus</label>
-                <input type="text" id="tipus" name="tipus" required>
+                <select name="prioritat" id="prioritat" required>
+                    <option value="" selected>-- Asignar prioritat --</option>
+                    <option value="alta">Alta</option>
+                    <option value="media">Media</option>
+                    <option value="baja">Baja</option>
+                </select>
                 <br><br>
                 <input type="submit" value="Registrar">
             </fieldset>

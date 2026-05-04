@@ -29,7 +29,8 @@ require_once 'connexio.php';
         while ($row = $result->fetch_assoc()) {
             echo "<p>ID: " . $row["idIncidencia"] . " - Nom: " . htmlspecialchars($row["descripcio"]) . "";
             echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a></p>";
-        }
+            echo " <a href='modificarIncidencia.php?id=" . $row["idIncidencia"] . "'>Modificar</a></p>";
+            }
 
     } else {
         echo "<p>No hi ha dades a mostrar.</p>";
@@ -42,7 +43,7 @@ require_once 'connexio.php';
     <div id="menu">
         <hr>
         <p><a href="index.php">Portada</a> </p>
-        <p><a href="llistar.php">Llistar</a></p>
+        <p><a href="llistarAdmin.php">Llistar</a></p>
         <p><a href="crear.php">Crear</a></p>
     </div>
 
