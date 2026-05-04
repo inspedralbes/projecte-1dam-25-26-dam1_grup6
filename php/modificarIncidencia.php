@@ -2,22 +2,6 @@
 
 require_once 'connexio.php';
 
-if (!isset($_GET["id"])) {
-    exit("No hay idss");
-}
-
-function modificar_incidencia($conn) {
-    $incidencia = $_GET['id'];
-    $prioritat = $_POST['prioritat'];
-    $tecnic = $_POST['tecnic'];
-    $tipus = $_POST['tipus'];
-
-$sentenciaMod = $conn->prepare("UPDATE INCIDENCIA SET prioritat = ?, idTecnic = ?, idTipologia = ? WHERE idIncidencia = ?");
-
-$sentenciaMod->bind_param("siii", $prioritat, $tecnic, $tipus, $incidencia);
-$sentenciaMod->execute();
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="ca">

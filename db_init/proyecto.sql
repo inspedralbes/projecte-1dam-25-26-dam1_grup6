@@ -60,3 +60,9 @@ INSERT INTO DEPARTAMENT (nom) VALUES ('Informatica');
 INSERT INTO TECNIC (nom) VALUES ('Juan');
 INSERT INTO TECNIC (nom) VALUES ('Alex');
 INSERT INTO TECNIC (nom) VALUES ('Luis');
+
+
+INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Red');
+INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Hardware');
+INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Software');
+INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Consumibles');
