@@ -28,7 +28,6 @@ require_once 'connexio.php';
         // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
         while ($row = $result->fetch_assoc()) {
             echo "<p>ID departament: " . $row["idIncidencia"] . " - Descripcio: " . htmlspecialchars($row["descripcio"]) . "";
-            echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
             echo " <a href='estat.php?id=" . $row["idIncidencia"] . "'>Estat</a></p>";
         }
 
@@ -43,6 +42,7 @@ require_once 'connexio.php';
     <div id="menu">
         <hr>
         <p><a href="crear.php">Crear</a></p>
+        <p><a href="index.php">Volver</a></p>
     </div>
 
 </body>
