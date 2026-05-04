@@ -123,21 +123,9 @@ $idIncidencia = $_POST["id"];
 
         // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
         while ($row = $result->fetch_assoc()) {
-            echo "<p>ID incidencia: " . $row["idIncidencia"] . "   --- Descripcio: " . htmlspecialchars($row["descripcio"]) . "";
-            echo "   --- ID tecnic asignat: " . $row["idTecnic"]. "";
-            echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
-            echo "<form method='POST' action='llistarAdmin.php'>";
-            echo "<select name='tecnic' id='tecnic' required>";
-            echo "<option value='' selected>-- Asignar tecnic--</option>";
-            echo "<option value='1'>Juan</option>";
-            echo "<option value='2'>Alex</option>";
-            echo "<option value='3'>Luis</option>";
-            echo "</select>";     
-            echo "<input type='hidden' name='id' value='" . $row["idIncidencia"] . "'>";
-            echo "<input type='submit' value='Asignar'>";
-            echo "</form>";
-            echo "</p>";
-            }
+            echo "<p>ID: " . $row["idIncidencia"] . " - Nom: " . htmlspecialchars($row["descripcio"]) . "";
+            echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a></p>";
+        }
 
     } else {
         echo "<p>No hi ha dades a mostrar.</p>";
@@ -151,7 +139,9 @@ $idIncidencia = $_POST["id"];
 
     <div id="menu">
         <hr>
-        <p><a href="index.php">Tornar</a></p>
+        <p><a href="index.php">Portada</a> </p>
+        <p><a href="llistar.php">Llistar</a></p>
+        <p><a href="crear.php">Crear</a></p>
     </div>
 
 </body>
