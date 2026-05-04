@@ -30,7 +30,6 @@ CREATE TABLE INCIDENCIA(
     descripcio VARCHAR(2000),
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     dataFinalitzacio DATE,
-    prioritat ENUM('baja','media','alta'),
     idTecnic INT,
     idDepartament INT,
     idTipologia INT,

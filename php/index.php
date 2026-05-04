@@ -14,6 +14,6 @@
         <a href="llistarTecnics.php">Tecnic</a>
         <a href="llistarAdmin.php">Administrador</a>
     </div>
-    
+
 </body>
 </html>
