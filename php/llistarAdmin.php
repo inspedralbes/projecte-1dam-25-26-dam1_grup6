@@ -53,6 +53,7 @@ $idIncidencia = $_POST["id"];
             echo "<p>ID incidencia: " . $row["idIncidencia"] . "   --- Descripcio: " . htmlspecialchars($row["descripcio"]) . "";
             echo "   --- ID tecnic asignat: " . $row["idTecnic"]. "";
             echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
+            echo " <a href='modificarIncidencia.php?id=" . $row["idIncidencia"] . "'>Modificar</a>";
             echo "<form method='POST' action='llistarAdmin.php'>";
             echo "<select name='tecnic' id='tecnic' required>";
             echo "<option value='' selected>-- Asignar tecnic--</option>";
