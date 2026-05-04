@@ -31,6 +31,7 @@ CREATE TABLE INCIDENCIA(
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     dataFinalitzacio DATE,
     idTecnic INT,
+    prioritat ENUM('baja', 'media', 'alta'),
     idDepartament INT,
     idTipologia INT,
     FOREIGN KEY (idTecnic) REFERENCES TECNIC(idTecnic),
