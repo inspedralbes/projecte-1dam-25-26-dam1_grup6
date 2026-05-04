@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php  
+include_once "encabezado.php";
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,8 +10,7 @@
 </head>
 
 <body> 
-    <h1>GI3P Gestor Incidencias DAM</h1>
-    <p>Selecció d'usuari</p>
+    <h2>Selecció d'usuari</h2>
     <div id = "menu">
         <a href="llistarProfessors.php">Profesor</a>
         <a href="llistarTecnics.php">Tecnic</a>
