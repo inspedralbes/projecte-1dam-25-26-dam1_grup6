@@ -38,7 +38,7 @@ $idIncidencia = $_POST["id"];
 
 <body>
     <h1>Panell administrador</h1>
-    <h2>LLista d'incidencies sense tecnic asignat</h2>
+    <h2>LLista d'incidencies</h2>
     <?php
 
     // Consulta SQL per obtenir totes les files de la taula 'cases'
