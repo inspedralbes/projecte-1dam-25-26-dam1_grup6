@@ -53,34 +53,35 @@ $descripcio = $_POST["descripcio"];
         //Mostrem el formulari per crear una nova casa
         //Tanquem el php per poder escriure el codi HTML de forma més còmoda.
         ?>
-        <form method="POST" action="crear.php">
-            <fieldset>
-                <legend>Registrar incidencia</legend>
-                <label>ID Incidencia:</label>
 
-                <br><br>
-         <select name="departament" id="departament" required>
-             <option value="" selected>-- Selecciona departament--</option>
-             <option value="1">Mates</option>
-             <option value="2">Fisica</option>
-             <option value="3">Quimica</option>
-             <option value="4">Lengua</option>
-             <option value="5">Informatica</option>
-         </select>
-                <br><br>
-                <label>Data:</label>
+ <?php
+$sql1 = "SELECT idDepartament, nom FROM DEPARTAMENT";
+$sentencia1 = $conn->query($sql1);
 
-                <br><br>
-                <label>Descripció:</label>
-                <input type="text" id="descripcio" name="descripcio" required>
-                <br><br>
-                <input type="submit" value="Registrar">
-            </fieldset>
-        </form>
+echo '<form method="POST" action="crear.php">';
 
+echo '<fieldset>';
+echo '<legend>Registrar incidencia</legend>';
+echo '<label>ID Incidencia:</label>';
+echo '<br><br>';
+
+    echo '<select name="departament" id="departament" required>';
+echo '<option value="" selected>-- Selecciona departament --</option>';
+    while($fila = $sentencia1->fetch_assoc()) {
+        echo '<option value="' . $fila["idDepartament"] . '">' . $fila["nom"] . '</option>';
+    }
+    
+    echo '</select>'; 
+    echo '<br><br>';
+echo '<label>Descripció:</label>';
+echo '<input type="text" id="descripcio" name="descripcio" required>';
+echo '<br><br>';
+echo '<input type="submit" value="Registrar">';
+    echo '</fieldset>';
+echo '</form>';
+?>
 
         <?php
-        //Tanquem l'else
     }
     ?>
     <div id="menu">
@@ -92,4 +93,3 @@ $descripcio = $_POST["descripcio"];
 </body>
 
 </html>
-
