@@ -56,6 +56,5 @@ function registrar_act($conn) {
 
 
         <?php
-        header("Location: llistarTecnic.php");
     }
     ?>
