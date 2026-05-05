@@ -40,14 +40,15 @@ $sql2 = "SELECT idTecnic, nom FROM TECNIC";
 $sentencia2 = $conn->query($sql2);
 
 echo '<form method="POST" action="llistarTecnics.php">';
-    echo '<select name="idTecnic">';
+    echo '<select name="tecnic" required>';
+    echo '<option value="" selected>-- Selecciona tecnic --</option>';
 
     while($fila = $sentencia2->fetch_assoc()) {
         echo '<option value="' . $fila["idTecnic"] . '">' . $fila["nom"] . '</option>';
     }
     
     echo '</select>'; 
-    echo '<input type="submit" value="Filtrar">';
+    echo '<input type="submit" value="Seleccionar">';
 echo '</form>';
 ?>
 
