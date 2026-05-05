@@ -15,7 +15,14 @@ function registrar_act($conn) {
     (?, ?, ?)");
 
     $sentenciaAct->bind_param("sii", $descripcio, $visible, $temps);
-    $sentenciaAct->execute();
+   
+
+    if ($sentenciaAct->execute()) {
+        echo"<p>It works</p>";
+        echo"<a href='llistarTecnics.php'>Back</a>";
+    } else {
+        echo"<p>NOP<z/p>";
+    }
 }
 
 ?>
