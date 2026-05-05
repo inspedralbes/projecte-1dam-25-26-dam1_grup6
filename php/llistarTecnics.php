@@ -31,16 +31,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-    <form method="POST" action="llistarTecnics.php">
-<select name="tecnic" id="tecnic" required>
-            <option value="" selected>-- Escull tecnic--</option>
-            <option value="1">Juan</option>
-            <option value="2">Alex</option>
-            <option value="3">Luis</option>
-    </select>
-            <input type="submit" value="Filtrar">
-</form>
+<?php
+$sql2 = "SELECT idTecnic, nom FROM TECNIC";
+$sentencia2 = $conn->query($sql2);
 
+echo '<form method="POST" action="llistarTecnics.php">';
+    echo '<select name="idTecnic">';
+
+    while($fila = $sentencia2->fetch_assoc()) {
+        echo '<option value="' . $fila["idTecnic"] . '">' . $fila["nom"] . '</option>';
+    }
+    
+    echo '</select>'; 
+    echo '<input type="submit" value="Filtrar">';
+echo '</form>';
+?>
 
     <?php
     // Comprovar si hi ha resultats
@@ -63,9 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <div id="menu">
         <hr>
-        <p><a href="index.php">Portada</a> </p>
-        <p><a href="llistar.php">Llistar</a></p>
-        <p><a href="crear.php">Crear</a></p>
+        <p><a href="index.php">Volver</a></p>
     </div>
 
 </body>
