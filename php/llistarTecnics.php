@@ -3,6 +3,10 @@
 //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
 require_once 'connexio.php';
 // Un cop inclòs el fitxer connexio.php, ja podeu utilitzar la variable $conn per a fer les consultes a la base de dades.
+
+
+$result = null; 
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["tecnic"])){
     $tecnic = $_POST["tecnic"];
@@ -44,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <?php
     // Comprovar si hi ha resultats
-    if ($result->num_rows > 0) {
+    if ($result !== null && $result->num_rows > 0) {
 
         // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
         while ($row = $result->fetch_assoc()) {
@@ -53,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             echo " <a href='registrarAct.php?id=" . $row["idIncidencia"] . "'>Editar</a></p>";
         }
 
-    } else {
+    } elseif ($result !== null) {
         echo "<p>No hi ha dades a mostrar.</p>";
     }
 
