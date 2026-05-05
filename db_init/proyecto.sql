@@ -28,9 +28,10 @@ CREATE TABLE TIPOLOGIA(
 CREATE TABLE INCIDENCIA(
     idIncidencia INT AUTO_INCREMENT PRIMARY KEY,
     descripcio VARCHAR(2000),
-    data TIMESTAMP,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     dataFinalitzacio DATE,
     idTecnic INT,
+    prioritat ENUM('baja', 'media', 'alta'),
     idDepartament INT,
     idTipologia INT,
     FOREIGN KEY (idTecnic) REFERENCES TECNIC(idTecnic),
@@ -47,3 +48,21 @@ CREATE TABLE ACTUACIO(
     idIncidencia INT,
     FOREIGN KEY (idIncidencia) REFERENCES INCIDENCIA(idIncidencia)
 );
+
+
+INSERT INTO DEPARTAMENT (nom) VALUES ('Mates');
+INSERT INTO DEPARTAMENT (nom) VALUES ('Fisica');
+INSERT INTO DEPARTAMENT (nom) VALUES ('Quimica');
+INSERT INTO DEPARTAMENT (nom) VALUES ('Lengua');
+INSERT INTO DEPARTAMENT (nom) VALUES ('Informatica');
+
+
+INSERT INTO TECNIC (nom) VALUES ('Juan');
+INSERT INTO TECNIC (nom) VALUES ('Alex');
+INSERT INTO TECNIC (nom) VALUES ('Luis');
+
+
+INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Red');
+INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Hardware');
+INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Software');
+INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Consumibles');
