@@ -59,16 +59,7 @@ require_once 'connexio.php';
             echo "<p>ID incidencia: " . $row["idIncidencia"] . "   --- Descripcio: " . htmlspecialchars($row["descripcio"]) . "";
             echo "   --- ID tecnic asignat: " . $row["idTecnic"]. "";
             echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
-            echo "<form method='POST' action='llistarAdmin.php'>";
-            echo "<select name='tecnic' id='tecnic' required>";
-            echo "<option value='' selected>-- Asignar tecnic--</option>";
-            echo "<option value='1'>Juan</option>";
-            echo "<option value='2'>Alex</option>";
-            echo "<option value='3'>Luis</option>";
-            echo "</select>";     
-            echo "<input type='hidden' name='id' value='" . $row["idIncidencia"] . "'>";
-            echo "<input type='submit' value='Asignar'>";
-            echo "</form>";
+            echo " <a href='modificarIncidencia.php?id=" . $row["idIncidencia"] . "'>Modificar</a>";
             echo "</p>";
             }
 
@@ -94,7 +85,9 @@ require_once 'connexio.php';
         // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
         while ($row = $result->fetch_assoc()) {
             echo "<p>ID: " . $row["idIncidencia"] . " - Nom: " . htmlspecialchars($row["descripcio"]) . "";
-            echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a></p>";
+            echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
+            echo " <a href='modificarIncidencia.php?id=" . $row["idIncidencia"] . "'>Modificar</a>";
+            echo "</p>";
         }
 
     } else {
