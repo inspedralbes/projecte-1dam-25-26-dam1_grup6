@@ -10,8 +10,7 @@ $result = null;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["tecnic"])){
     $tecnic = $_POST["tecnic"];
-    $sql = "SELECT idIncidencia, descripcio, fecha FROM INCIDENCIA WHERE idTecnic = ?";
-    $sentencia = $conn->prepare($sql);
+$sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, i.prioritat, i.idDepartament, i.idTipologia, d.nom, t.nomTipologia FROM INCIDENCIA i, DEPARTAMENT d, TIPOLOGIA t WHERE i.idTecnic = ? AND i.idDepartament = d.idDepartament AND i.idTipologia = t.idTipologia";    $sentencia = $conn->prepare($sql);
     $sentencia->bind_param("i", $tecnic);
     $sentencia->execute();
 
@@ -58,7 +57,11 @@ echo '</form>';
 
         // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
         while ($row = $result->fetch_assoc()) {
-            echo "<p>ID: " . $row["idIncidencia"] . " - Nom: " . htmlspecialchars($row["descripcio"]) . "";
+            echo "<p>ID: " . $row["idIncidencia"] . " - Descripcio: " . htmlspecialchars($row["descripcio"]) . "";
+            echo "   --- Data Inici: " . $row["fecha"]. "";
+            echo "   --- Prioridad: " . $row["prioritat"]. "";
+            echo "   --- Departament: " . $row["nom"]. "";
+            echo "   --- Tipologia: " . $row["nomTipologia"]. "";
             echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
             echo " <a href='registrarAct.php?id=" . $row["idIncidencia"] . "'>Editar</a></p>";
         }

@@ -21,7 +21,7 @@ require_once 'connexio.php';
     <?php
 
     // Consulta SQL per obtenir totes les files de la taula 'cases'
-    $sql = "SELECT idIncidencia, descripcio, fecha, idTecnic FROM INCIDENCIA";
+    $sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, a.nom, i.idTecnic FROM INCIDENCIA i, TECNIC a WHERE i.idTecnic = a.idTecnic";
     $result = $conn->query($sql);
 
     // Comprovar si hi ha resultats
@@ -30,7 +30,8 @@ require_once 'connexio.php';
         // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
         while ($row = $result->fetch_assoc()) {
             echo "<p>ID incidencia: " . $row["idIncidencia"] . "   --- Descripcio: " . htmlspecialchars($row["descripcio"]) . "";
-            echo "   --- ID tecnic asignat: " . $row["idTecnic"]. "";
+            echo "   --- ID tecnic asignat: " . $row["nom"]. "";
+            echo "   --- Data Inici: " . $row["fecha"]. "";
             echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
             echo " <a href='modificarIncidencia.php?id=" . $row["idIncidencia"] . "'>Modificar</a>";
             echo "</p>";
