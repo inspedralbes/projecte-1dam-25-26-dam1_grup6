@@ -66,3 +66,87 @@ INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Red');
 INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Hardware');
 INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Software');
 INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Consumibles');
+
+CREATE OR REPLACE VIEW vista_informe_tecnics AS
+
+SELECT
+
+    t.idTecnic,
+
+    t.nom AS nomTecnic,
+
+    i.prioritat,
+
+    i.idIncidencia,
+
+    i.descripcio AS descripcioIncidencia,
+
+    i.fecha AS dataInici,
+
+    IFNULL(SUM(a.temps), 0) AS tempsTotalDedicat
+
+FROM TECNIC t
+
+INNER JOIN INCIDENCIA i
+
+    ON t.idTecnic = i.idTecnic
+
+LEFT JOIN ACTUACIO a
+
+    ON i.idIncidencia = a.idIncidencia
+
+WHERE i.dataFinalitzacio IS NULL
+
+GROUP BY
+
+    t.idTecnic,
+
+    t.nom,
+
+    i.prioritat,
+
+    i.idIncidencia,
+
+    i.descripcio,
+
+    i.fecha
+
+CREATE OR REPLACE VIEW vista_consum_departaments AS
+
+SELECT
+
+    d.idDepartament,
+
+    d.nom AS nomDepartament,
+
+    COUNT(i.idIncidencia) AS nombreIncidencies,
+
+    IFNULL(SUM(temps_per_incidencia.tempsTotal), 0) AS tempsTotalDedicat
+
+FROM DEPARTAMENT d
+
+LEFT JOIN INCIDENCIA i
+
+    ON d.idDepartament = i.idDepartament
+
+LEFT JOIN (
+
+    SELECT
+
+        incidencia,
+
+        SUM(temps) AS tempsTotal
+
+    FROM ACTUACIO
+
+    GROUP BY incidencia
+
+) AS temps_per_incidencia
+
+    ON i.idIncidencia = temps_per_incidencia.incidencia
+
+GROUP BY
+
+    d.idDepartament,
+
+    d.nom;
