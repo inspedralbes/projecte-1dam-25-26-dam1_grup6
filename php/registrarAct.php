@@ -8,20 +8,21 @@ function registrar_act($conn) {
     $descripcio = $_POST["descripcio"];
     $visible = $_POST["visible"];
     $temps = $_POST["temps"];
+    $fecha = $_POST["fecha"];
 
     $sentenciaAct = $conn->prepare("INSERT INTO ACTUACIO 
-    (descripcio, visible, temps)
+    (descripcio, visible, temps, fecha)
     VALUES
-    (?, ?, ?)");
+    (?, ?, ?, ?)");
 
-    $sentenciaAct->bind_param("sii", $descripcio, $visible, $temps);
+    $sentenciaAct->bind_param("siis", $descripcio, $visible, $temps, $fecha);
    
 
     if ($sentenciaAct->execute()) {
-        echo"<p>It works</p>";
+        echo"<p>Actuacio registrada</p>";
         echo"<a href='llistarTecnics.php'>Back</a>";
     } else {
-        echo"<p>NOP<z/p>";
+        echo"<p>Actuacio no registrada<z/p>";
     }
 }
 
@@ -53,6 +54,9 @@ function registrar_act($conn) {
                 <br><br>
                 <label>Visible:</label>
                 <input type="number" name="visible" id="visible" required>
+                <br><br>
+                <label>Data actuacio:</label>
+                <input type="datetime-local" name="fecha">
                 <br><br>
                 <label>Temps:</label>
                 <input type="number" name="temps" id="temps" required>
