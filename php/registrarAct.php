@@ -6,16 +6,17 @@ require_once 'connexio.php';
 
 function registrar_act($conn) {
     $descripcio = $_POST["descripcio"];
-    $visible = $_POST["visible"];
+    $visible = (int) $_POST["visible"];
     $temps = $_POST["temps"];
     $fecha = $_POST["fecha"];
+    $idIncidencia = $_POST["idIncidencia"];
 
     $sentenciaAct = $conn->prepare("INSERT INTO ACTUACIO 
-    (descripcio, visible, temps, fecha)
+    (descripcio, visible, temps, fecha, idIncidencia)
     VALUES
-    (?, ?, ?, ?)");
+    (?, ?, ?, ?, ?)");
 
-    $sentenciaAct->bind_param("siis", $descripcio, $visible, $temps, $fecha);
+    $sentenciaAct->bind_param("siisi", $descripcio, $visible, $temps, $fecha, $idIncidencia);
    
 
     if ($sentenciaAct->execute()) {
@@ -48,12 +49,17 @@ function registrar_act($conn) {
         <form method="POST" action="registrarAct.php">
             <fieldset>
                 <legend>Registrar actuacion</legend>
+                <input type="hidden" name="idIncidencia" value="<?php echo $_GET["id"] ?>">
                 <br><br>
                 <label>Descripció:</label>
                 <input type="text" id="descripcio" name="descripcio" required>
                 <br><br>
-                <label>Visible:</label>
-                <input type="number" name="visible" id="visible" required>
+                <label>Visiblidad para professores:</label>
+                <select name="visible" id="visible" required>
+                    <option value="" selected> -- Visible? --</option>
+                    <option value="0">No visible</option>
+                    <option value="1">Visible</option>
+                </select>
                 <br><br>
                 <label>Data actuacio:</label>
                 <input type="datetime-local" name="fecha">
