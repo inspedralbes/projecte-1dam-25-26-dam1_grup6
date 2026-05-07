@@ -89,11 +89,11 @@ FROM TECNIC t
 
 INNER JOIN INCIDENCIA i
 
-    ON t.idTecnic = i.tecnic
+    ON t.idTecnic = i.idTecnic
 
 LEFT JOIN ACTUACIO a
 
-    ON i.idIncidencia = a.incidencia
+    ON i.idIncidencia = a.idIncidencia
 
 WHERE i.dataFinalitzacio IS NULL
 
@@ -109,7 +109,7 @@ GROUP BY
 
     i.descripcio,
 
-    i.fecha;
+    i.fecha
 
 CREATE OR REPLACE VIEW vista_consum_departaments AS
 
@@ -127,7 +127,7 @@ FROM DEPARTAMENT d
 
 LEFT JOIN INCIDENCIA i
 
-    ON d.idDepartament = i.departament
+    ON d.idDepartament = i.idDepartament
 
 LEFT JOIN (
 

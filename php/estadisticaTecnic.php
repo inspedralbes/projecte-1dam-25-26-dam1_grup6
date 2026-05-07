@@ -16,7 +16,7 @@ require_once 'connexio.php';
     <?php
         try {
             $sentenciaTecnics = $conn->query("SELECT * FROM vista_informe_tecnics");
-            $result = $sentenciaTecnics->fetchAll(PDO::FETCH_BOTH);
+            $result = $sentenciaTecnics->fetch_all(MYSQLI_ASSOC);
 
             if (count($result) > 0) {
                 ?>
