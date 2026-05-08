@@ -133,20 +133,20 @@ LEFT JOIN (
 
     SELECT
 
-        incidencia,
+        idIncidencia,
 
         SUM(temps) AS tempsTotal
 
     FROM ACTUACIO
 
-    GROUP BY incidencia
+    GROUP BY idIncidencia
 
 ) AS temps_per_incidencia
 
-    ON i.idIncidencia = temps_per_incidencia.incidencia
+    ON i.idIncidencia = temps_per_incidencia.idIncidencia
 
 GROUP BY
 
     d.idDepartament,
 
-    d.nom;
+    d.nom

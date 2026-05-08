@@ -51,7 +51,7 @@ require_once 'connexio.php';
             <?php
             }
             else {
-                echo "<p> No s'han trobat incidencies per registrar.<p>";
+                echo "<p> No s'han trobat incidencies per registrar.</p>";
             } 
         } catch (PDOException $e) {
             echo "<p> ERROR </p>";
