@@ -27,7 +27,9 @@ require_once 'connexio.php';
 
         // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
         while ($row = $result->fetch_assoc()) {
-            echo "<p>ID departament: " . $row["idIncidencia"] . " - Descripcio: " . htmlspecialchars($row["descripcio"]) . "";
+            echo "<p>ID departament: " . $row["idIncidencia"] . "";
+            echo "   --- Data Inici: " . $row["fecha"]. "";
+            echo "   --- Descripcio: " . htmlspecialchars($row["descripcio"]) . "";
             echo " <a href='estat.php?id=" . $row["idIncidencia"] . "'>Estat</a></p>";
         }
 

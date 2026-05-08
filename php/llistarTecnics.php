@@ -63,7 +63,8 @@ echo '</form>';
             echo "   --- Departament: " . $row["nom"]. "";
             echo "   --- Tipologia: " . $row["nomTipologia"]. "";
             echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
-            echo " <a href='registrarAct.php?id=" . $row["idIncidencia"] . "'>Editar</a></p>";
+            echo " <a href='registrarAct.php?id=" . $row["idIncidencia"] . "'>Registrar actuacio</a>";
+            echo " <a href='estatTecnic.php?id=" . $row["idIncidencia"] . "'>Historial actuacions</a></p>";
         }
 
     } elseif ($result !== null) {
