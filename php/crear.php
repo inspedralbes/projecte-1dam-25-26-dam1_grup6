@@ -103,7 +103,7 @@ echo '</div>';
  <br><br>
  <div class="d-flex justify-content-center gap-3">
     <a href="llistarProfessors.php" class="btn btn-primary">Tornar</a>
-    <a href="index.php.php" class="btn btn-primary">Tornar a inici</a>
+    <a href="index.php" class="btn btn-primary">Tornar a inici</a>
  </div>
 
 

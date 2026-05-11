@@ -57,7 +57,7 @@ require_once 'connexio.php';
 
 
     <div class="d-flex justify-content-center gap-3 mt-3">
-        <a href="index.php" class="btn btn-primary">Tornar</a>
+        <a href="index.php" class="btn btn-primary">Tornar a inici</a>
     </div>
 
 </body>

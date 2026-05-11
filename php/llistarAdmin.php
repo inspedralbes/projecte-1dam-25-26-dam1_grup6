@@ -29,16 +29,26 @@ require_once 'connexio.php';
 
         // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
         while ($row = $result->fetch_assoc()) {
-            echo "<p>ID incidencia: " . $row["idIncidencia"] . "   --- Descripcio: " . htmlspecialchars($row["descripcio"]) . "";
-            echo "   --- ID tecnic asignat: " . $row["nom"]. "";
-            echo "   --- Data Inici: " . $row["fecha"]. "";
-            echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
-            echo " <a href='modificarIncidencia.php?id=" . $row["idIncidencia"] . "'>Modificar</a>";
-            echo "</p>";
+    echo "<div class='card mt-3'>";
+    echo "<div class='card-body d-flex align-items-center gap-3 flex-wrap'>";
+    echo "<span class='fw-bold'>ID Incidencia: " . $row["idIncidencia"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Data Inici: " . $row["fecha"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>ID tecnic asignat: " . $row["nom"]. "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Descripcio: " . htmlspecialchars($row["descripcio"]) . "</span>";
+    echo "<div class='ms-auto d-flex gap-2'>";
+    echo "<a class='btn btn-danger btn-sm' href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
+    echo "<a class='btn btn-primary btn-sm' href='modificarIncidencia.php?id=" . $row["idIncidencia"] . "'>Modificar</a>";
+    echo "<a class='btn btn-secondary btn-sm' href='estatTecnic.php?id=" . $row["idIncidencia"] . "'>Historial actuacions</a>";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
             }
 
     } else {
-        echo "<p>No hi ha dades a mostrar.</p>";
+         echo '<div class="alert alert-warning text-center mt-3">No hi ha dades a mostrar</div>';
     }
 
 
@@ -57,15 +67,24 @@ require_once 'connexio.php';
 
         // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
         while ($row = $result->fetch_assoc()) {
-            echo "<p>ID incidencia: " . $row["idIncidencia"] . "   --- Descripcio: " . htmlspecialchars($row["descripcio"]) . "";
-            echo "   --- ID tecnic asignat: " . $row["idTecnic"]. "";
-            echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
-            echo " <a href='modificarIncidencia.php?id=" . $row["idIncidencia"] . "'>Modificar</a>";
-            echo "</p>";
+    echo "<div class='card mt-3'>";
+    echo "<div class='card-body d-flex align-items-center gap-3 flex-wrap'>";
+    echo "<span class='fw-bold'>ID Incidencia: " . $row["idIncidencia"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Data Inici: " . $row["fecha"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Descripcio: " . htmlspecialchars($row["descripcio"]) . "</span>";
+    echo "<div class='ms-auto d-flex gap-2'>";
+    echo "<a class='btn btn-danger btn-sm' href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
+    echo "<a class='btn btn-primary btn-sm' href='modificarIncidencia.php?id=" . $row["idIncidencia"] . "'>Modificar</a>";
+    echo "<a class='btn btn-secondary btn-sm' href='estatTecnic.php?id=" . $row["idIncidencia"] . "'>Historial actuacions</a>";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
             }
 
     } else {
-        echo "<p>No hi ha dades a mostrar.</p>";
+         echo '<div class="alert alert-warning text-center mt-3">No hi ha dades a mostrar</div>';
     }
     ?>
 
@@ -77,7 +96,7 @@ require_once 'connexio.php';
     <?php
 
     // Consulta SQL per obtenir totes les files de la taula 'cases'
-    $sql = "SELECT idIncidencia, descripcio, fecha, idTecnic FROM INCIDENCIA WHERE dataFinalitzacio IS NULL";
+    $sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, a.nom, i.idTecnic FROM INCIDENCIA i, TECNIC a WHERE i.idTecnic = a.idTecnic AND dataFinalitzacio IS NULL";
     $result = $conn->query($sql);
 
     // Comprovar si hi ha resultats
@@ -85,14 +104,26 @@ require_once 'connexio.php';
 
         // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
         while ($row = $result->fetch_assoc()) {
-            echo "<p>ID: " . $row["idIncidencia"] . " - Nom: " . htmlspecialchars($row["descripcio"]) . "";
-            echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
-            echo " <a href='modificarIncidencia.php?id=" . $row["idIncidencia"] . "'>Modificar</a>";
-            echo "</p>";
+    echo "<div class='card mt-3'>";
+    echo "<div class='card-body d-flex align-items-center gap-3 flex-wrap'>";
+    echo "<span class='fw-bold'>ID Incidencia: " . $row["idIncidencia"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Data Inici: " . $row["fecha"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>ID tecnic asignat: " . $row["nom"]. "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Descripcio: " . htmlspecialchars($row["descripcio"]) . "</span>";
+    echo "<div class='ms-auto d-flex gap-2'>";
+    echo "<a class='btn btn-danger btn-sm' href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
+    echo "<a class='btn btn-primary btn-sm' href='modificarIncidencia.php?id=" . $row["idIncidencia"] . "'>Modificar</a>";
+    echo "<a class='btn btn-secondary btn-sm' href='estatTecnic.php?id=" . $row["idIncidencia"] . "'>Historial actuacions</a>";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
         }
 
     } else {
-        echo "<p>No hi ha dades a mostrar.</p>";
+         echo '<div class="alert alert-warning text-center mt-3">No hi ha dades a mostrar</div>';
     }
 
     // Tancar la connexió
@@ -101,9 +132,8 @@ require_once 'connexio.php';
 
 
 
-    <div id="menu">
-        <hr>
-        <p><a href="index.php">Volver</a> </p>
+    <div class="d-flex justify-content-center gap-3 mt-3">
+        <a href="index.php" class="btn btn-primary">Tornar a inici</a>
     </div>
 
 </body>

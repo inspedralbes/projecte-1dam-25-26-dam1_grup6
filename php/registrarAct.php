@@ -27,6 +27,55 @@ function registrar_act($conn) {
     }
 }
 
+
+
+function finalitzar_act($conn) {
+    $descripcio = $_POST["descripcio"];
+    $visible = (int) $_POST["visible"];
+    $temps = $_POST["temps"];
+    $fecha = $_POST["fecha"];
+    $idIncidencia = $_POST["idIncidencia"];
+
+    $sentenciaAct = $conn->prepare("INSERT INTO ACTUACIO 
+    (descripcio, visible, temps, fecha, idIncidencia)
+    VALUES
+    (?, ?, ?, ?, ?)");
+
+    $sentenciaAct->bind_param("siisi", $descripcio, $visible, $temps, $fecha, $idIncidencia);
+    $sentenciaAct->execute();
+
+    $sentenciaInc = $conn->prepare("UPDATE INCIDENCIA 
+        SET dataFinalitzacio = ? 
+        WHERE idIncidencia = ?");
+    $sentenciaInc->bind_param("si", $fecha, $idIncidencia);
+
+
+    if ($sentenciaInc->execute()) {
+    echo "<div class='card mt-3 bg-success bg-opacity-25'>";
+    echo "<div class='card-body d-flex align-items-center gap-3 flex-wrap'>";
+    echo "<p>Actuacio registrada</p>";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div class='d-flex justify-content-center gap-3 mt-3'>";
+    echo "<a href='index.php' class='btn btn-primary'>Tornar</a>";
+    echo "</div>";
+    } else {
+    echo "<div class='card mt-3 bg-danger bg-opacity-25'>";
+    echo "<div class='card-body d-flex align-items-center gap-3 flex-wrap'>";
+    echo "<p>Actuacio no registrada</p>";
+    echo "</div>";
+    echo "</div>";
+
+    echo "<div class='d-flex justify-content-center gap-3 mt-3'>";
+    echo "<a href='index.php' class='btn btn-primary'>Tornar</a>";
+    echo "</div>";
+    }
+}
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -44,8 +93,14 @@ function registrar_act($conn) {
     <?php
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    if (isset($_POST["registrar"])) {
         registrar_act($conn);
-    } else {
+    } else if (isset($_POST["finalitzar"])) {
+        finalitzar_act($conn);
+    }
+    } 
+    else {
         ?>
 <div class="container mt-5">
 <div class="row justify-content-center">
@@ -80,7 +135,8 @@ function registrar_act($conn) {
     </div>
 
     <div class="d-grid">
-        <button type="submit" class="btn btn-primary">Registrar</button>
+        <button type="submit" name="registrar" class="btn btn-primary">Registrar</button>
+        <button type="submit" name="finalitzar" class="btn btn-primary">Registrar y finalitzar</button>
     </div>
 </form>
 </div>

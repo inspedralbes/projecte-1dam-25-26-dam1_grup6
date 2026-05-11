@@ -7,16 +7,31 @@ require_once 'connexio.php';
 
 $result = null; 
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (isset($_POST["tecnic"])){
-    $tecnic = $_POST["tecnic"];
-$sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, i.prioritat, i.idDepartament, i.idTipologia, d.nom, t.nomTipologia FROM INCIDENCIA i, DEPARTAMENT d, TIPOLOGIA t WHERE i.idTecnic = ? AND i.idDepartament = d.idDepartament AND i.idTipologia = t.idTipologia";    $sentencia = $conn->prepare($sql);
+
+
+$sort = $_GET['sort'] ?? 'fecha';
+$order = $_GET['order'] ?? 'ASC';
+
+$sortPermesos = ['fecha', 'prioritat'];
+$orderPermesos = ['asc', 'desc'];
+
+if (!in_array($sort, $sortPermesos)) $sort = 'fecha';
+if (!in_array(strtolower($order), $orderPermesos)) $order = 'ASC';
+
+
+
+
+if (isset($_POST["tecnic"]) || isset($_GET["tecnic"])) {
+    $tecnic = $_POST["tecnic"] ?? $_GET["tecnic"];
+
+$sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, i.prioritat, i.idDepartament, i.idTipologia, d.nom, t.nomTipologia FROM INCIDENCIA i, DEPARTAMENT d, TIPOLOGIA t WHERE i.idTecnic = ? AND i.idDepartament = d.idDepartament AND i.idTipologia = t.idTipologia AND i.dataFinalitzacio IS NULL ORDER BY $sort $order";    
+$sentencia = $conn->prepare($sql);
     $sentencia->bind_param("i", $tecnic);
     $sentencia->execute();
 
     $result = $sentencia->get_result();
 
-}
+
 }
 
 ?>
@@ -66,6 +81,11 @@ echo '</div>';
     // Comprovar si hi ha resultats
     if ($result !== null && $result->num_rows > 0) {
 
+echo "<a href='?sort=fecha&order=asc&tecnic=" . $tecnic . "' class='btn btn-sm btn-outline-secondary'>Data ↑</a>";
+echo "<a href='?sort=fecha&order=desc&tecnic=" . $tecnic . "' class='btn btn-sm btn-outline-secondary'>Data ↓</a>";
+echo "<a href='?sort=prioritat&order=asc&tecnic=" . $tecnic . "' class='btn btn-sm btn-outline-secondary'>Prioritat ↑</a>";
+echo "<a href='?sort=prioritat&order=desc&tecnic=" . $tecnic . "' class='btn btn-sm btn-outline-secondary'>Prioritat ↓</a>";
+
 while ($row = $result->fetch_assoc()) {
     echo "<div class='card mt-3'>";
     echo "<div class='card-body d-flex align-items-center gap-3 flex-wrap'>";
@@ -81,7 +101,6 @@ while ($row = $result->fetch_assoc()) {
     echo "<span class='text-muted'>|</span>";
     echo "<span>Descripcio: " . htmlspecialchars($row["descripcio"]) . "</span>";
     echo "<div class='ms-auto d-flex gap-2'>";
-    echo "<a class='btn btn-danger btn-sm' href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
     echo "<a class='btn btn-primary btn-sm' href='registrarAct.php?id=" . $row["idIncidencia"] . "'>Registrar actuacio</a>";
     echo "<a class='btn btn-secondary btn-sm' href='estatTecnic.php?id=" . $row["idIncidencia"] . "'>Historial actuacions</a>";
     echo "</div>";
@@ -90,16 +109,15 @@ while ($row = $result->fetch_assoc()) {
 }
 
     } elseif ($result !== null) {
-        echo "<p>No hi ha dades a mostrar.</p>";
+         echo '<div class="alert alert-warning text-center mt-3">No hi ha dades a mostrar</div>';
     }
 
     // Tancar la connexió
     $conn->close();
     ?>
 
-    <div id="menu">
-        <hr>
-        <p><a href="index.php">Volver</a></p>
+    <div class="d-flex justify-content-center gap-3 mt-3">
+        <a href="index.php" class="btn btn-primary">Tornar a inici</a>
     </div>
 
 </body>

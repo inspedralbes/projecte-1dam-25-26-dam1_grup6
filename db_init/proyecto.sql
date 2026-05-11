@@ -29,7 +29,7 @@ CREATE TABLE INCIDENCIA(
     idIncidencia INT AUTO_INCREMENT PRIMARY KEY,
     descripcio VARCHAR(2000),
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    dataFinalitzacio DATE,
+    dataFinalitzacio TIMESTAMP,
     idTecnic INT,
     prioritat ENUM('baja', 'media', 'alta'),
     idDepartament INT,
