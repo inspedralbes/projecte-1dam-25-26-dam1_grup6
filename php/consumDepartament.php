@@ -42,6 +42,7 @@ require_once 'connexio.php';
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <a href="testSgeD.php">Fes-ho a quesitos</a>
             <?php
             } else {
                 echo "<p> No s'ha trobat incidencies per registrar.</p>";

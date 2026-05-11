@@ -48,6 +48,7 @@ require_once 'connexio.php';
                     <?php endforeach; ?>
                     </tbody>
                 </table>
+                <a href="testSGEI.php">Fes-ho a quesitos</a>
             <?php
             }
             else {
