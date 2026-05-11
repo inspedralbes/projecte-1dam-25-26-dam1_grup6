@@ -17,10 +17,6 @@ services:
       - ./php:/var/www/html
     environment:
       VAR1: "sóc una pera i estic al docker-compose"
-      DB_SERVERNAME: db
-      DB_USERNAME: usuari
-      DB_PASSWORD: paraula_de_pas
-      DB_NAME: proyecto
     depends_on:
       - db
 
@@ -33,8 +29,8 @@ services:
       # de caràcters i aleshores donarà problemes amb accents i caràcters especials
       # La BBDD es crearà a l'inici del contenidor amb els script d'inicialització
       # MYSQL_DATABASE: persones
-      MYSQL_USER: usuari
-      MYSQL_PASSWORD: paraula_de_pas
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
       LANG: C.UTF-8
     #    El mysql no s'exposa a l'exterior
     #    L'aplicació web hi accedirà per la xarxa interna de docker
