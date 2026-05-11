@@ -7,10 +7,10 @@
 
 
 // Configuració de la connexió a la base de dades
-$servername = "db"; // Nom del servei definit al docker-compose.yaml
-$username = "usuari"; // Usuari definit al docker-compose.yaml
-$password = "paraula_de_pas"; // Contrasenya definida al docker-compose.yaml
-$dbname = "proyecto"; // Nom de la base de dades
+$servername = getenv(DB_SERVERNAME); // Nom del servei definit al docker-compose.yaml
+$username = getenv(DB_USERNAME); // Usuari definit al docker-compose.yaml
+$password = getenv(DB_PASSWORD); // Contrasenya definida al docker-compose.yaml
+$dbname = getenv(DB_NAME); // Nom de la base de dades
 
 // Quan ja tingueu un codi una mica depurat, i vulgueu fer la gestió dels errors
 // vosaltres mateixos heu de desactivar el comportament predeterminat de mysqli 
