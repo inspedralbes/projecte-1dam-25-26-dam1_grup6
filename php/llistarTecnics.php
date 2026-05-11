@@ -59,7 +59,7 @@ $sentencia2 = $conn->query($sql2);
 
 echo '<form method="POST" action="llistarTecnics.php">';
 echo '<div class="mb-3">';
-    echo '<select name="tecnic" class="form-select" required>';
+    echo '<select name="tecnic" class="form-select" required';
     echo '<option value="" selected>-- Selecciona tecnic --</option>';
 
     while($fila = $sentencia2->fetch_assoc()) {

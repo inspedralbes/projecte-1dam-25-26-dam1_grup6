@@ -39,7 +39,8 @@ require_once 'connexio.php';
     echo "<span class='fw-bold'>ID Incidencia: " . $row["idIncidencia"] . "</span>";
     echo "<span class='text-muted'>|</span>";
     echo "<span>Data Inici: " . $row["fecha"] . "</span>";
-        echo "<span>Departament: " . $row["nom"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Departament: " . $row["nom"] . "</span>";
     echo "<span class='text-muted'>|</span>";
     echo "<span>Descripcio: " . htmlspecialchars($row["descripcio"]) . "</span>";
     echo "<a class='btn btn-primary btn-sm ms-auto' href='estat.php?id=" . $row["idIncidencia"] . "'>Estat</a>";
@@ -48,7 +49,7 @@ require_once 'connexio.php';
     }
 
     } else {
-        echo "<p>No hi ha dades a mostrar.</p>";
+         echo '<div class="alert alert-warning text-center mt-3">No hi ha dades a mostrar</div>';
     }
 
     // Tancar la connexió
