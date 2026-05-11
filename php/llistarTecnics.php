@@ -21,6 +21,7 @@ $sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, i.prioritat, i.idDepartame
 
 ?>
 <!DOCTYPE html>
+<?php include_once "encabezado.php"; ?>
 <html lang="ca">
 
 <head>
@@ -30,8 +31,11 @@ $sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, i.prioritat, i.idDepartame
 </head>
 
 <body>
-    <h1>Llistat de cases</h1>
 
+
+<div class="text-center mt-3">
+    <h2 class="mt-3">Llistat d'incidencies</h2>
+</div>
 
 
 <?php
@@ -39,7 +43,8 @@ $sql2 = "SELECT idTecnic, nom FROM TECNIC";
 $sentencia2 = $conn->query($sql2);
 
 echo '<form method="POST" action="llistarTecnics.php">';
-    echo '<select name="tecnic" required>';
+echo '<div class="mb-3">';
+    echo '<select name="tecnic" class="form-select" required>';
     echo '<option value="" selected>-- Selecciona tecnic --</option>';
 
     while($fila = $sentencia2->fetch_assoc()) {
@@ -47,25 +52,42 @@ echo '<form method="POST" action="llistarTecnics.php">';
     }
     
     echo '</select>'; 
-    echo '<input type="submit" value="Seleccionar">';
-echo '</form>';
+    echo '</div>';
+
+
+echo '<div class="d-flex justify-content-center gap-3 mt-3">';
+echo '<button type="submit" class="btn btn-primary">Seleccionar</button>';
+echo '</div>';
+
 ?>
+
 
     <?php
     // Comprovar si hi ha resultats
     if ($result !== null && $result->num_rows > 0) {
 
-        // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
-        while ($row = $result->fetch_assoc()) {
-            echo "<p>ID: " . $row["idIncidencia"] . " - Descripcio: " . htmlspecialchars($row["descripcio"]) . "";
-            echo "   --- Data Inici: " . $row["fecha"]. "";
-            echo "   --- Prioridad: " . $row["prioritat"]. "";
-            echo "   --- Departament: " . $row["nom"]. "";
-            echo "   --- Tipologia: " . $row["nomTipologia"]. "";
-            echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
-            echo " <a href='registrarAct.php?id=" . $row["idIncidencia"] . "'>Registrar actuacio</a>";
-            echo " <a href='estatTecnic.php?id=" . $row["idIncidencia"] . "'>Historial actuacions</a></p>";
-        }
+while ($row = $result->fetch_assoc()) {
+    echo "<div class='card mt-3'>";
+    echo "<div class='card-body d-flex align-items-center gap-3 flex-wrap'>";
+    echo "<span class='fw-bold'>ID Incidencia: " . $row["idIncidencia"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Data Inici: " . $row["fecha"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Prioridad: " . $row["prioritat"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Departament: " . $row["nom"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Tipologia: " . $row["nomTipologia"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Descripcio: " . htmlspecialchars($row["descripcio"]) . "</span>";
+    echo "<div class='ms-auto d-flex gap-2'>";
+    echo "<a class='btn btn-danger btn-sm' href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
+    echo "<a class='btn btn-primary btn-sm' href='registrarAct.php?id=" . $row["idIncidencia"] . "'>Registrar actuacio</a>";
+    echo "<a class='btn btn-secondary btn-sm' href='estatTecnic.php?id=" . $row["idIncidencia"] . "'>Historial actuacions</a>";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
+}
 
     } elseif ($result !== null) {
         echo "<p>No hi ha dades a mostrar.</p>";

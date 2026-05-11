@@ -4,9 +4,9 @@
 require_once 'connexio.php';
 // Un cop inclòs el fitxer connexio.php, ja podeu utilitzar la variable $conn per a fer les consultes a la base de dades.
 
-
 ?>
 <!DOCTYPE html>
+<?php include_once "encabezado.php"; ?>
 <html lang="ca">
 
 <head>

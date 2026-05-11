@@ -30,6 +30,7 @@ function registrar_act($conn) {
 ?>
 
 <!DOCTYPE html>
+<?php include_once "encabezado.php"; ?>
 <html lang="ca">
 
 <head>
@@ -46,32 +47,47 @@ function registrar_act($conn) {
         registrar_act($conn);
     } else {
         ?>
-        <form method="POST" action="registrarAct.php">
-            <fieldset>
-                <legend>Registrar actuacion</legend>
-                <input type="hidden" name="idIncidencia" value="<?php echo $_GET["id"] ?>">
-                <br><br>
-                <label>Descripció:</label>
-                <input type="text" id="descripcio" name="descripcio" required>
-                <br><br>
-                <label>Visiblidad para professores:</label>
-                <select name="visible" id="visible" required>
-                    <option value="" selected> -- Visible? --</option>
-                    <option value="0">No visible</option>
-                    <option value="1">Visible</option>
-                </select>
-                <br><br>
-                <label>Data actuacio:</label>
-                <input type="datetime-local" name="fecha">
-                <br><br>
-                <label>Temps:</label>
-                <input type="number" name="temps" id="temps" required>
-                <br><br>
-                <input type="submit" value="Registrar">
-            </fieldset>
-        </form>
+<div class="container mt-5">
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="card-body">
+<h4 class="card-title text-center mb-4">Registrar Actuació</h4>
+<form method="POST" action="registrarAct.php">
+    <input type="hidden" name="idIncidencia" value="<?php echo $_GET["id"] ?>">
+    
+    <div class="mb-3">
+        <label class="form-label fw-bold">Descripció:</label>
+        <input type="text" id="descripcio" name="descripcio" class="form-control" required>
+    </div>
 
+    <div class="mb-3">
+        <label class="form-label fw-bold">Visibilitat per a professors:</label>
+        <select name="visible" id="visible" class="form-select" required>
+            <option value="" selected>-- Visible? --</option>
+            <option value="0">No visible</option>
+            <option value="1">Visible</option>
+        </select>
+    </div>
 
+    <div class="mb-3">
+        <label class="form-label fw-bold">Data actuació:</label>
+        <input type="datetime-local" name="fecha" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-bold">Temps:</label>
+        <input type="number" name="temps" id="temps" class="form-control" required>
+    </div>
+
+    <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
         <?php
     }
     ?>
