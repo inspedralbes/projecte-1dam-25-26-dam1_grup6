@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consum per departaments</title>
+</head>
+<body>
+    <h1>Consum per departaments</h1>
+
 <?php
 require_once 'connexio.php';
 $sql = "SELECT * FROM vista_consum_departaments";
