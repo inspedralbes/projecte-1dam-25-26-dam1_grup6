@@ -17,6 +17,10 @@ services:
       - ./php:/var/www/html
     environment:
       VAR1: "sóc una pera i estic al docker-compose"
+      DB_SERVERNAME: db
+      DB_USERNAME: usuari
+      DB_PASSWORD: paraula_de_pas
+      DB_NAME: proyecto
     depends_on:
       - db
 
