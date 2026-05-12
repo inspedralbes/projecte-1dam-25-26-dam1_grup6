@@ -39,6 +39,11 @@ require_once 'connexio.php';
         <option value="obertes">Obertes</option>
         <option value="tancades">Tancades</option>
     </select>
+
+    <div class="d-flex justify-content-center gap-3 mt-3">
+<button type="submit" class="btn btn-primary">Seleccionar</button>
+</div>
+
 </form>
 
     <?php
