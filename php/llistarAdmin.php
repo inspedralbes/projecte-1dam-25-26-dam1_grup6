@@ -19,7 +19,10 @@ require_once 'connexio.php';
     <h1>Panell administrador</h1>
     <h2>LLista d'incidencies</h2>
     <a href="estadisticaTecnic.php">Estadisticas de Tecnicos</a>
+    <br>
     <a href="consumDepartament.php">Estadisticas del consumo por departamentos</a>
+    <br>
+    <a href="log.php">Estadistiques d'acces</a>
     <?php
 
     // Consulta SQL per obtenir totes les files de la taula 'cases'
