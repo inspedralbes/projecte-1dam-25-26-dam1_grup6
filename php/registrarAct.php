@@ -89,7 +89,7 @@ function finalitzar_act($conn) {
 </head>
 
 <body>
-    <h1>Registra una actuacció</h1>
+    <h1 class="fw-bold text-center mt-3 mb-5">Registra una actuacció</h1>
     <?php
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -135,9 +135,15 @@ function finalitzar_act($conn) {
     </div>
 
     <div class="d-grid">
-        <button type="submit" name="registrar" class="btn btn-primary">Registrar</button>
+        <button type="submit" name="registrar" class="btn btn-primary mb-2">Registrar</button>
         <button type="submit" name="finalitzar" class="btn btn-primary">Registrar y finalitzar</button>
     </div>
+
+        <div class="d-flex justify-content-center gap-3 mt-3">
+        <a href="llistarTecnics.php" class="btn btn-primary">Tornar</a>
+        <a href="index.php" class="btn btn-primary">Tornar a inici</a>
+    </div>
+
 </form>
 </div>
 </div>

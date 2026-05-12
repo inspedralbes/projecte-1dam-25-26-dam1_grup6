@@ -16,13 +16,22 @@ require_once 'connexio.php';
 </head>
 
 <body>
-    <h1>Panell administrador</h1>
-    <h2>LLista d'incidencies</h2>
-    <a href="estadisticaTecnic.php">Estadistiques de Tecnics</a>
-    <br>
-    <a href="consumDepartament.php">Consum per departament</a>
-    <br>
-    <a href="log.php">Estadistiques d'acces</a>
+
+<h1 class="fw-bold text-center mt-3 mb-5">Panell administrador</h1>
+
+
+<div class="card pt-3 pb-3">
+  <h4 class="text-center mb-3">Estadístiques i consums</h4>
+  <div class="d-flex justify-content-center gap-2 flex-wrap">
+    <a href="estadisticaTecnic.php" class="btn btn-primary">Estadístiques de Tècnics</a>
+    <a href="consumDepartament.php" class="btn btn-primary">Consum per departament</a>
+    <a href="log.php" class="btn btn-primary">Estadístiques d'accés</a>
+  </div>
+</div>
+
+
+<h2 class="text-center mt-5  mb-3">Llistat d'incidencies</h2>
+
     <?php
 
 $sort = $_GET['sort'] ?? 'fecha';
@@ -89,17 +98,17 @@ echo "<a href='?sort=prioritat&order=desc&filtre=" . $filtre . "' class='btn btn
     echo "<div class='card-body d-flex align-items-center gap-3 flex-wrap'>";
     echo "<span class='fw-bold'>ID Incidencia: " . $row["idIncidencia"] . "</span>";
     echo "<span class='text-muted'>|</span>";
-    echo "<span class='fw-bold'>Data inici: " . $row["fecha"] . "</span>";
+    echo "<span>Data inici: " . $row["fecha"] . "</span>";
     echo "<span class='text-muted'>|</span>";
-    echo "<span class='fw-bold'>Prioritat: " . $row["prioritat"] . "</span>";
+    echo "<span>Prioritat: " . $row["prioritat"] . "</span>";
     echo "<span class='text-muted'>|</span>";
-    echo "<span class='fw-bold'>Departament: " . $row["nomDepartament"] . "</span>";
+    echo "<span>Departament: " . $row["nomDepartament"] . "</span>";
     echo "<span class='text-muted'>|</span>";
-    echo "<span class='fw-bold'>Tipologia: " . $row["nomTipologia"] . "</span>";
+    echo "<span>Tipologia: " . $row["nomTipologia"] . "</span>";
     echo "<span class='text-muted'>|</span>";
-    echo "<span class='fw-bold'>Nom tecnic: " . ($row["nomTecnic"] ?? "Sense assignar") . "</span>";
+    echo "<span>Nom tecnic: " . ($row["nomTecnic"] ?? "Sense assignar") . "</span>";
     echo "<span class='text-muted'>|</span>";
-    echo "<span class='fw-bold'>Descripcio: " . $row["descripcio"] . "</span>";
+    echo "<span>Descripcio: " . $row["descripcio"] . "</span>";
     echo "<div class='ms-auto d-flex gap-2'>";
     echo "<a class='btn btn-danger btn-sm' href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
     echo "<a class='btn btn-primary btn-sm' href='modificarIncidencia.php?id=" . $row["idIncidencia"] . "'>Modificar</a>";
@@ -116,8 +125,6 @@ echo "<a href='?sort=prioritat&order=desc&filtre=" . $filtre . "' class='btn btn
     // Tancar la connexió
     $conn->close();
     ?>
-
-
 
     <div class="d-flex justify-content-center gap-3 mt-3">
         <a href="index.php" class="btn btn-primary">Tornar a inici</a>
