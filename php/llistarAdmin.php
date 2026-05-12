@@ -3,31 +3,10 @@
 //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
 require_once 'connexio.php';
 // Un cop inclòs el fitxer connexio.php, ja podeu utilitzar la variable $conn per a fer les consultes a la base de dades.
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
-    if (isset($_POST["tecnic"], $_POST["id"])){
-
-    // Obtenir el nom de la casa del formulari
-$tecnic = $_POST["tecnic"];
-$idIncidencia = $_POST["id"];
-    // Comprovar si el nom no està buit
-    // Si l'html està ben escrit això no podria passar en els usuaris normals
-    // Igualment SEMPRE s'ha de comprovar tot al backend ja que no tots els usuaris
-    // són "bones persones" i des de les web tools es pot canviar tot el front per exemple.
-
-    // Preparar la consulta SQL per inserir una nova casa
-
-
-    $sentencia2= $conn->prepare("UPDATE INCIDENCIA SET idTecnic = ? WHERE idIncidencia = ?");
-
-    $sentencia2->bind_param("ii", $tecnic, $idIncidencia);
-    $sentencia2->execute();
-    }
-}
-
 
 ?>
 <!DOCTYPE html>
+<?php include_once "encabezado.php"; ?>
 <html lang="ca">
 
 <head>
@@ -37,112 +16,132 @@ $idIncidencia = $_POST["id"];
 </head>
 
 <body>
-    <h1>Panell administrador</h1>
-    <h2>LLista d'incidencies</h2>
+
+<h1 class="fw-bold text-center mt-3 mb-5">Panell administrador</h1>
+
+
+<div class="card pt-3 pb-3">
+  <h4 class="text-center mb-3">Estadístiques i consums</h4>
+  <div class="d-flex justify-content-center gap-2 flex-wrap">
+    <a href="estadisticaTecnic.php" class="btn btn-primary">Estadístiques de Tècnics</a>
+    <a href="consumDepartament.php" class="btn btn-primary">Consum per departament</a>
+    <a href="log.php" class="btn btn-primary">Estadístiques d'accés</a>
+  </div>
+</div>
+
+
+<h2 class="text-center mt-5  mb-3">Llistat d'incidencies</h2>
+
+<form class="mb-3" method="GET">
+    <select name="filtre" class="form-select">
+        <option value="tots">Tots</option>
+        <option value="sense_tecnic">Sense tècnic</option>
+        <option value="obertes">Obertes</option>
+        <option value="tancades">Tancades</option>
+    </select>
+
+    <div class="d-flex justify-content-center gap-3 mt-3">
+<button type="submit" class="btn btn-primary">Seleccionar</button>
+</div>
+
+</form>
+
     <?php
 
-    // Consulta SQL per obtenir totes les files de la taula 'cases'
-    $sql = "SELECT idIncidencia, descripcio, fecha, idTecnic FROM INCIDENCIA";
+$sort = $_GET['sort'] ?? 'fecha';
+$order = $_GET['order'] ?? 'ASC';
+
+$sortPermesos = ['fecha', 'prioritat'];
+$orderPermesos = ['asc', 'desc'];
+
+if (!in_array($sort, $sortPermesos)) $sort = 'fecha';
+if (!in_array(strtolower($order), $orderPermesos)) $order = 'ASC';
+
+
+
+    $filtre = $_GET['filtre'] ?? '';
+
+
+if ($filtre == 'sense_tecnic') {
+    $sql = "SELECT i.*, t.nomTipologia, d.nom AS nomDepartament 
+    FROM INCIDENCIA i
+    LEFT JOIN TIPOLOGIA t ON i.idTipologia = t.idTipologia
+    LEFT JOIN DEPARTAMENT d ON i.idDepartament = d.idDepartament
+    WHERE i.idTecnic IS NULL
+    ORDER BY $sort $order";
+
+} else if ($filtre == 'obertes') {
+    $sql = "SELECT i.*, t.nomTipologia, d.nom AS nomDepartament, c.nom AS nomTecnic 
+    FROM INCIDENCIA i
+    LEFT JOIN TIPOLOGIA t ON i.idTipologia = t.idTipologia
+    LEFT JOIN DEPARTAMENT d ON i.idDepartament = d.idDepartament
+    LEFT JOIN TECNIC c ON i.idTecnic = c.idTecnic
+    WHERE i.dataFinalitzacio IS NULL
+    ORDER BY $sort $order";
+
+} else if ($filtre == 'tancades') {
+    $sql = "SELECT i.*, t.nomTipologia, d.nom AS nomDepartament, c.nom AS nomTecnic 
+    FROM INCIDENCIA i
+    LEFT JOIN TIPOLOGIA t ON i.idTipologia = t.idTipologia
+    LEFT JOIN DEPARTAMENT d ON i.idDepartament = d.idDepartament
+    LEFT JOIN TECNIC c ON i.idTecnic = c.idTecnic
+    WHERE i.dataFinalitzacio IS NOT NULL
+    ORDER BY $sort $order";
+
+} else {
+    $sql = "SELECT i.*, t.nomTipologia, d.nom AS nomDepartament, c.nom AS nomTecnic 
+    FROM INCIDENCIA i
+    LEFT JOIN TIPOLOGIA t ON i.idTipologia = t.idTipologia
+    LEFT JOIN DEPARTAMENT d ON i.idDepartament = d.idDepartament
+    LEFT JOIN TECNIC c ON i.idTecnic = c.idTecnic
+    ORDER BY $sort $order";
+}
     $result = $conn->query($sql);
 
     // Comprovar si hi ha resultats
-    if ($result->num_rows > 0) {
+        if ($result->num_rows > 0) {
 
-        // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
+
+echo "<a href='?sort=fecha&order=asc&filtre=" . $filtre . "' class='btn btn-sm btn-outline-secondary'>Data ↑</a>";
+echo "<a href='?sort=fecha&order=desc&filtre=" . $filtre . "' class='btn btn-sm btn-outline-secondary'>Data ↓</a>";
+echo "<a href='?sort=prioritat&order=asc&filtre=" . $filtre . "' class='btn btn-sm btn-outline-secondary'>Prioritat ↑</a>";
+echo "<a href='?sort=prioritat&order=desc&filtre=" . $filtre . "' class='btn btn-sm btn-outline-secondary'>Prioritat ↓</a>";
+
         while ($row = $result->fetch_assoc()) {
-            echo "<p>ID incidencia: " . $row["idIncidencia"] . "   --- Descripcio: " . htmlspecialchars($row["descripcio"]) . "";
-            echo "   --- ID tecnic asignat: " . $row["idTecnic"]. "";
-            echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
-            echo " <a href='modificarIncidencia.php?id=" . $row["idIncidencia"] . "'>Modificar</a>";
-            echo "<form method='POST' action='llistarAdmin.php'>";
-            echo "<select name='tecnic' id='tecnic' required>";
-            echo "<option value='' selected>-- Asignar tecnic--</option>";
-            echo "<option value='1'>Juan</option>";
-            echo "<option value='2'>Alex</option>";
-            echo "<option value='3'>Luis</option>";
-            echo "</select>";     
-            echo "<input type='hidden' name='id' value='" . $row["idIncidencia"] . "'>";
-            echo "<input type='submit' value='Asignar'>";
-            echo "</form>";
-            echo "</p>";
-            }
-
-    } else {
-        echo "<p>No hi ha dades a mostrar.</p>";
-    }
-
-
-    ?>
-
-<p>---------------------------------------------------------------------------------------</p>
-<h2>LLista d'incidencies sense tecnic asignat</h2>
-    <?php
-
-    // Consulta SQL per obtenir totes les files de la taula 'cases'
-    $sql = "SELECT idIncidencia, descripcio, fecha, idTecnic FROM INCIDENCIA WHERE idTecnic IS NULL";
-    $result = $conn->query($sql);
-
-    // Comprovar si hi ha resultats
-    if ($result->num_rows > 0) {
-
-        // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
-        while ($row = $result->fetch_assoc()) {
-            echo "<p>ID incidencia: " . $row["idIncidencia"] . "   --- Descripcio: " . htmlspecialchars($row["descripcio"]) . "";
-            echo "   --- ID tecnic asignat: " . $row["idTecnic"]. "";
-            echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
-            echo "<form method='POST' action='llistarAdmin.php'>";
-            echo "<select name='tecnic' id='tecnic' required>";
-            echo "<option value='' selected>-- Asignar tecnic--</option>";
-            echo "<option value='1'>Juan</option>";
-            echo "<option value='2'>Alex</option>";
-            echo "<option value='3'>Luis</option>";
-            echo "</select>";     
-            echo "<input type='hidden' name='id' value='" . $row["idIncidencia"] . "'>";
-            echo "<input type='submit' value='Asignar'>";
-            echo "</form>";
-            echo "</p>";
-            }
-
-    } else {
-        echo "<p>No hi ha dades a mostrar.</p>";
-    }
-    ?>
-
-
-
-
-<p>---------------------------------------------------------------------------------------</p>
-<h2>LLista d'incidencies obertes</h2>
-    <?php
-
-    // Consulta SQL per obtenir totes les files de la taula 'cases'
-    $sql = "SELECT idIncidencia, descripcio, fecha, idTecnic FROM INCIDENCIA WHERE dataFinalitzacio IS NULL";
-    $result = $conn->query($sql);
-
-    // Comprovar si hi ha resultats
-    if ($result->num_rows > 0) {
-
-        // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
-        while ($row = $result->fetch_assoc()) {
-            echo "<p>ID: " . $row["idIncidencia"] . " - Nom: " . htmlspecialchars($row["descripcio"]) . "";
-            echo " <a href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a></p>";
+    echo "<div class='card mt-3'>";
+    echo "<div class='card-body d-flex align-items-center gap-3 flex-wrap'>";
+    echo "<span class='fw-bold'>ID Incidencia: " . $row["idIncidencia"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Data inici: " . $row["fecha"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Prioritat: " . $row["prioritat"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Departament: " . $row["nomDepartament"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Tipologia: " . $row["nomTipologia"] . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Nom tecnic: " . ($row["nomTecnic"] ?? "Sense assignar") . "</span>";
+    echo "<span class='text-muted'>|</span>";
+    echo "<span>Descripcio: " . $row["descripcio"] . "</span>";
+    echo "<div class='ms-auto d-flex gap-2'>";
+    echo "<a class='btn btn-danger btn-sm' href='esborrar.php?id=" . $row["idIncidencia"] . "'>Esborrar</a>";
+    echo "<a class='btn btn-primary btn-sm' href='modificarIncidencia.php?id=" . $row["idIncidencia"] . "'>Modificar</a>";
+    echo "<a class='btn btn-secondary btn-sm' href='estatTecnic.php?id=" . $row["idIncidencia"] . "'>Historial actuacions</a>";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
         }
 
     } else {
-        echo "<p>No hi ha dades a mostrar.</p>";
+         echo '<div class="alert alert-warning text-center mt-3">No hi ha dades a mostrar</div>';
     }
 
     // Tancar la connexió
     $conn->close();
     ?>
 
-
-
-    <div id="menu">
-        <hr>
-        <p><a href="index.php">Portada</a> </p>
-        <p><a href="llistar.php">Llistar</a></p>
-        <p><a href="crear.php">Crear</a></p>
+    <div class="d-flex justify-content-center gap-3 mt-3">
+        <a href="index.php" class="btn btn-primary">Tornar a inici</a>
     </div>
 
 </body>
