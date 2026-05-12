@@ -145,5 +145,5 @@ function finalitzar_act($conn) {
 </div>
 </div>
         <?php
-    } header("Location: llistarTecnics.php");
+    } 
     ?>
