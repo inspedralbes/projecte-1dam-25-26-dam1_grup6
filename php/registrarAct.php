@@ -20,10 +20,25 @@ function registrar_act($conn) {
    
 
     if ($sentenciaAct->execute()) {
-        echo"<p>Actuacio registrada</p>";
-        echo"<a href='llistarTecnics.php'>Back</a>";
+    echo "<div class='card mt-3 bg-success bg-opacity-25'>";
+    echo "<div class='card-body d-flex justify-content-center align-items-center gap-3 flex-wrap'>";
+    echo "<p>Actuacio registrada</p>";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div class='d-flex justify-content-center gap-3 mt-3'>";
+    echo "<a href='index.php' class='btn btn-primary'>Tornar</a>";
+    echo "</div>";
     } else {
-        echo"<p>Actuacio no registrada<z/p>";
+    echo "<div class='card mt-3 bg-danger bg-opacity-25'>";
+    echo "<div class='card-body d-flex align-items-center gap-3 flex-wrap'>";
+    echo "<p>Actuacio no registrada</p>";
+    echo "</div>";
+    echo "</div>";
+
+    echo "<div class='d-flex justify-content-center gap-3 mt-3'>";
+    echo "<a href='index.php' class='btn btn-primary'>Tornar</a>";
+    echo "</div>";
     }
 }
 
@@ -52,7 +67,7 @@ function finalitzar_act($conn) {
 
     if ($sentenciaInc->execute()) {
     echo "<div class='card mt-3 bg-success bg-opacity-25'>";
-    echo "<div class='card-body d-flex align-items-center gap-3 flex-wrap'>";
+    echo "<div class='card-body d-flex justify-content-center align-items-center gap-3 flex-wrap'>";
     echo "<p>Actuacio registrada</p>";
     echo "</div>";
     echo "</div>";
@@ -135,7 +150,7 @@ function finalitzar_act($conn) {
     </div>
 
     <div class="d-grid">
-        <button type="submit" name="registrar" class="btn btn-primary mb-2">Registrar</button>
+        <button type="submit" name="registrar" class="btn btn-primary mb-3">Registrar</button>
         <button type="submit" name="finalitzar" class="btn btn-primary">Registrar y finalitzar</button>
     </div>
 
