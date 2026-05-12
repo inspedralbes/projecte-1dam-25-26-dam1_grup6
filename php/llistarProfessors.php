@@ -1,8 +1,29 @@
-<?php
+    <?php
 
-//Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
-require_once 'connexio.php';
-// Un cop inclòs el fitxer connexio.php, ja podeu utilitzar la variable $conn per a fer les consultes a la base de dades.
+    //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
+    require_once 'connexio.php';
+    // Un cop inclòs el fitxer connexio.php, ja podeu utilitzar la variable $conn per a fer les consultes a la base de dades.
+
+
+    $result = null; 
+
+    $sort = 'fecha';
+    $order = $_GET['order'] ?? 'ASC';
+    if (!in_array(strtolower($order), ['asc', 'desc'])) $order = 'ASC';
+
+
+    $tecnic = $_POST["tecnic"] ?? $_GET["tecnic"] ?? null;
+
+
+    $sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, i.idDepartament, d.nom 
+            FROM INCIDENCIA i, DEPARTAMENT d 
+            WHERE i.idDepartament = d.idDepartament ORDER BY $sort $order"; 
+
+        $result = $conn->query($sql);
+
+
+
+
 ?>
 <!DOCTYPE html>
 <?php include_once "encabezado.php"; ?>
@@ -26,11 +47,15 @@ require_once 'connexio.php';
     <?php
 
     // Consulta SQL per obtenir totes les files de la taula 'cases'
-    $sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, i.idDepartament, d.nom FROM INCIDENCIA i, DEPARTAMENT d WHERE i.idDepartament = d.idDepartament";
-    $result = $conn->query($sql);
+
+
+
 
     // Comprovar si hi ha resultats
     if ($result->num_rows > 0) {
+
+echo "<a href='?sort=fecha&order=asc&tecnic=" . $tecnic . "' class='btn btn-sm btn-outline-secondary'>Data ↑</a>";
+echo "<a href='?sort=fecha&order=desc&tecnic=" . $tecnic . "' class='btn btn-sm btn-outline-secondary'>Data ↓</a>";
 
         // Llistar els resultats. ATENCIÓ, heu de construir el codi HTML d'una llista correctament
     while ($row = $result->fetch_assoc()) {

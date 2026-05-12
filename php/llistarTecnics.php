@@ -24,7 +24,10 @@ if (!in_array(strtolower($order), $orderPermesos)) $order = 'ASC';
 if (isset($_POST["tecnic"]) || isset($_GET["tecnic"])) {
     $tecnic = $_POST["tecnic"] ?? $_GET["tecnic"];
 
-$sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, i.prioritat, i.idDepartament, i.idTipologia, d.nom, t.nomTipologia FROM INCIDENCIA i, DEPARTAMENT d, TIPOLOGIA t WHERE i.idTecnic = ? AND i.idDepartament = d.idDepartament AND i.idTipologia = t.idTipologia AND i.dataFinalitzacio IS NULL ORDER BY $sort $order";    
+$sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, i.prioritat, i.idDepartament, i.idTipologia, d.nom, t.nomTipologia 
+FROM INCIDENCIA i, DEPARTAMENT d, TIPOLOGIA t 
+WHERE i.idTecnic = ? AND i.idDepartament = d.idDepartament AND i.idTipologia = t.idTipologia AND i.dataFinalitzacio 
+IS NULL ORDER BY $sort $order";    
 $sentencia = $conn->prepare($sql);
     $sentencia->bind_param("i", $tecnic);
     $sentencia->execute();
