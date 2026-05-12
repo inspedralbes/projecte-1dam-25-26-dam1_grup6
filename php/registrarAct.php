@@ -166,5 +166,5 @@ function finalitzar_act($conn) {
 </div>
 </div>
         <?php
-    }
+    } 
     ?>
