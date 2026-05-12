@@ -87,7 +87,14 @@ echo "<a href='?sort=prioritat&order=asc&tecnic=" . $tecnic . "' class='btn btn-
 echo "<a href='?sort=prioritat&order=desc&tecnic=" . $tecnic . "' class='btn btn-sm btn-outline-secondary'>Prioritat ↓</a>";
 
 while ($row = $result->fetch_assoc()) {
-    echo "<div class='card mt-3'>";
+    if ($row['prioritat'] == 'alta') $color = 'bg-danger bg-opacity-25';
+    elseif ($row['prioritat'] == 'media') $color = 'bg-warning bg-opacity-25';
+    elseif ($row['prioritat'] == 'baja') $color = 'bg-success bg-opacity-25';
+    else $color = '';
+
+
+
+    echo "<div class='card mt-3 $color'>";
     echo "<div class='card-body d-flex align-items-center gap-3 flex-wrap'>";
     echo "<span class='fw-bold'>ID Incidencia: " . $row["idIncidencia"] . "</span>";
     echo "<span class='text-muted'>|</span>";
