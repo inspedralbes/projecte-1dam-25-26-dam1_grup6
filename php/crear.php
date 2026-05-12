@@ -27,13 +27,15 @@ $descripcio = $_POST["descripcio"];
     (?, ?)");
 
     $sentencia2->bind_param("si", $descripcio, $departament);
-    $sentencia2->execute();
+    return $sentencia2->execute();
 
 }
 
-
 ?>
 <!DOCTYPE html>
+<?php  
+include_once "encabezado.php";
+?>
 <html lang="ca">
 
 <head>
@@ -43,53 +45,69 @@ $descripcio = $_POST["descripcio"];
 </head>
 
 <body>
-    <h1>Registrar incidencia</h1>
     <?php
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Si el formulari s'ha enviatc (mètode POST), cridem a la funció per crear la casa
-        registrar_inc($conn);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $resultado = registrar_inc($conn); // CAMBIO 2: guardar el resultado
+    if ($resultado) {
+        echo '<div class="alert alert-success text-center mt-3">Incidencia registrada correctament!</div>';
     } else {
+        echo '<div class="alert alert-danger text-center mt-3">Error al registrar la incidencia.</div>';
+    }
+} else {
         //Mostrem el formulari per crear una nova casa
         //Tanquem el php per poder escriure el codi HTML de forma més còmoda.
         ?>
-        <form method="POST" action="crear.php">
-            <fieldset>
-                <legend>Registrar incidencia</legend>
-                <label>ID Incidencia:</label>
 
-                <br><br>
-         <select name="departament" id="departament" required>
-             <option value="" selected>-- Selecciona departament--</option>
-             <option value="1">Mates</option>
-             <option value="2">Fisica</option>
-             <option value="3">Quimica</option>
-             <option value="4">Lengua</option>
-             <option value="5">Informatica</option>
-         </select>
-                <br><br>
-                <label>Data:</label>
+<?php
+$sql1 = "SELECT idDepartament, nom FROM DEPARTAMENT";
+$sentencia1 = $conn->query($sql1);
 
-                <br><br>
-                <label>Descripció:</label>
-                <input type="text" id="descripcio" name="descripcio" required>
-                <br><br>
-                <input type="submit" value="Registrar">
-            </fieldset>
-        </form>
+echo '<div class="container mt-5">';
+echo '<div class="row justify-content-center">';
+echo '<div class="col-md-6">';
+echo '<div class="card-body">';
+echo '<h2 class="card-title text-center mb-4">Registrar Incidencia</h2>';
+
+echo '<form method="POST" action="crear.php">';
+
+echo '<div class="mb-3">';
+echo '<label class="form-label fw-bold">Departament:</label>';
+echo '<select name="departament" id="departament" class="form-select" required>';
+echo '<option value="" selected>-- Selecciona departament --</option>';
+while($fila = $sentencia1->fetch_assoc()) {
+    echo '<option value="' . $fila["idDepartament"] . '">' . $fila["nom"] . '</option>';
+}
+echo '</select>';
+echo '</div>';
+
+echo '<div class="mb-3">';
+echo '<label class="form-label fw-bold">Descripció:</label>';
+echo '<input type="text" id="descripcio" name="descripcio" class="form-control" required>';
+echo '</div>';
+
+echo '<div class="d-grid">';
+echo '<button type="submit" class="btn btn-primary">Registrar</button>';
+echo '</div>';
+
+echo '</form>';
+echo '</div>';
+echo '</div>';
+echo '</div>';
+echo '</div>';
+?>
+
+<?php } ?>
 
 
-        <?php
-        //Tanquem l'else
-    }
-    ?>
-    <div id="menu">
-        <hr>
-        <p><a href="index.php">Portada</a> </p>
-        <p><a href="llistarProfessors.php">Llistar</a></p>
-        <p><a href="crear.php">Crear</a></p>
-    </div>
+ <br><br>
+ <div class="d-flex justify-content-center gap-3">
+    <a href="llistarProfessors.php" class="btn btn-primary">Tornar</a>
+    <a href="index.php" class="btn btn-primary">Tornar a inici</a>
+ </div>
+
+
+
 </body>
 
 </html>
-

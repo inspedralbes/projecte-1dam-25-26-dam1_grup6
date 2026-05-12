@@ -8,7 +8,7 @@ if (!isset($_GET["id"])) {
 
 $id = $_GET['id'];
 
-$sql = $conn->prepare(" SELECT idActuacion, descripcio, fecha, temps, idIncidencia, visible FROM ACTUACIO WHERE idIncidencia = ? AND visible = 1");
+$sql = $conn->prepare(" SELECT idActuacion, descripcio, fecha, temps, visible FROM ACTUACIO WHERE idIncidencia = ?");
 
 $sql->bind_param('i', $id);
 $sql->execute();
@@ -31,26 +31,6 @@ if ($result->num_rows > 0) {
     }
 
 } else {
-      echo '<div class="alert alert-warning text-center mt-3">No hi ha dades per mostrar</div>';
-}
-
-
-
-
-$sql2 = $conn->prepare(" SELECT idIncidencia, descripcio, dataFinalitzacio FROM INCIDENCIA WHERE idIncidencia = ? AND dataFinalitzacio IS NOT NULL");
-
-$sql2->bind_param('i', $id);
-$sql2->execute();
-$result = $sql2->get_result();
-
-if ($result->num_rows > 0) {
-      echo '<div class="alert alert-success text-center mt-3">Incidencia resolta</div>';
-
-} else {
-     echo '<div class="alert alert-warning text-center mt-3">Incidencia pendent de resoldre</div>';
+         echo '<div class="alert alert-warning text-center mt-3">No hi ha dades a mostrar</div>';
 }
 ?>
-
-    <div class="d-flex justify-content-center gap-3 mt-3">
-        <a href="index.php" class="btn btn-primary">Tornar a inici</a>
-    </div>

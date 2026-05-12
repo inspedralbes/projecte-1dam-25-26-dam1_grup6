@@ -1,9 +1,8 @@
 <?php
-
 require_once 'connexio.php';
-
 ?>
 <!DOCTYPE html>
+<?php include_once "encabezado.php"; ?>
 <html lang="ca">
 
 <head>
