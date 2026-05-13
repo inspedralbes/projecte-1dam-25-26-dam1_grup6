@@ -18,7 +18,6 @@ function registrar_act($conn) {
 
     $sentenciaAct->bind_param("siisi", $descripcio, $visible, $temps, $fecha, $idIncidencia);
    
-
     if ($sentenciaAct->execute()) {
     echo "<div class='card mt-3 bg-success bg-opacity-25'>";
     echo "<div class='card-body d-flex justify-content-center align-items-center gap-3 flex-wrap'>";
@@ -166,5 +165,5 @@ function finalitzar_act($conn) {
 </div>
 </div>
         <?php
-    }
+    } 
     ?>
