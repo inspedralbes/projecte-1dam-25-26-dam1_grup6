@@ -54,7 +54,7 @@ else{
 
 <div class="text-center mt-3">
     <div class="col-md-12">
-        <h2 class="mb-3">Llistat d'incidencies</h2>
+        <h1 class="mb-3">Panell professorat</h1>
         <div class="d-flex justify-content-end">
             <p class="mb-1">Buscador incidencia per codi</p>
         </div>
@@ -74,6 +74,10 @@ else{
 </div>
 
 
+
+
+
+        <h2 class="mb-3 mt-5 text-center">Llistat d'incidencies</h2>
     <?php
 
 

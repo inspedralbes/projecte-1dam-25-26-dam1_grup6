@@ -64,7 +64,7 @@ $sentencia = $conn->prepare($sql);
 
 <div class="text-center mt-3">
     <div class="col-md-12">
-    <h2 class="mt-3">Llistat d'incidencies</h2>
+    <h1 class="mt-3">Panell tecnic</h1>
     </div>
     <div class="d-flex flex-column align-items-end mb-3">
         <p class="mb-1 text-muted small">Buscador incidencia per codi</p>
@@ -75,7 +75,7 @@ $sentencia = $conn->prepare($sql);
     </div>
 </div>
 
-
+<h2 class="mt-3 text-center">Llistat d'incidencies</h2>
 <?php
 $sql2 = "SELECT idTecnic, nom FROM TECNIC";
 $sentencia2 = $conn->query($sql2);
