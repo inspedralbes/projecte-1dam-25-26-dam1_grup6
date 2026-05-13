@@ -15,7 +15,7 @@ $collection = $client->demo->users;
 $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 $hora = date("H:i:s");
 
-$collection->insertOne([
+$collection->insertMany([
     'name' => 'Anna',
     'age' => 28,
     'ip_origin' => $ip,
@@ -26,13 +26,3 @@ echo "Dades inserides a demo .\n";
 
 // Obtenir tots els documents de la col·lecció users de la BBDD demo
 // $collection = $client->demo->users; #no cal, ja que ho hem fet abans
-$documents = $collection->find();
-
-foreach ($documents as $document) {
-    echo "<p>";
-    echo htmlspecialchars($document['date'] ?? "x");
-    echo " ( " . htmlspecialchars($document['ip_origin'] ?? "x") . " )";
-    echo " : " . htmlspecialchars($document['name']);
-    echo "</p>";
-
-}
