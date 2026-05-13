@@ -1,10 +1,7 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
-    $uri = $_ENV['MONGODB_URI'];
+    $uri = 'mongodb://root:example@mongo:27017/';
 
     $client = new MongoDB\Client($uri);
 

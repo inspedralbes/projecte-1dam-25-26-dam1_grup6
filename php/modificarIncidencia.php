@@ -1,5 +1,6 @@
 <?php
 require_once 'connexio.php';
+include_once 'mongo.php';
 ?>
 <!DOCTYPE html>
 <?php include_once "encabezado.php"; ?>

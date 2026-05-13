@@ -1,7 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 
-$URI = getenv("MONGODB_URI");
+$URI = 'mongodb://root:example@mongo:27017/';
 
 $client = new MongoDB\Client($URI);
 
