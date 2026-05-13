@@ -7,3 +7,6 @@ db_data5
 db_data6
 db_data7
 db_data8
+db_data9
+php/.env
+php/vendor

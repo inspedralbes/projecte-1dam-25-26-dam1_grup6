@@ -1,5 +1,6 @@
 <?php
-require_once "connexio.php";
+require_once 'connexio.php';
+include_once 'mongo.php';
 if (!isset($_GET["id"])) {
     exit("No hay id");
 }

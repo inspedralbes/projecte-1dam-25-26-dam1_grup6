@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php  
 include_once "encabezado.php";
+include_once "mongo.php";
 ?>
 <html lang="en">
 <head>

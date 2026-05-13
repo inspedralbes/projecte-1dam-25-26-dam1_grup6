@@ -1,5 +1,6 @@
 <?php
-include_once "connexio.php";
+include_once 'connexio.php';
+include_once 'mongo.php';
 $id = $_POST["id"];
 $tipus = $_POST["tipus"];
 $tecnic = $_POST["tecnic"];
