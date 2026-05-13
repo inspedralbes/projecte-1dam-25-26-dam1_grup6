@@ -8,7 +8,7 @@ require_once 'connexio.php';
 $result = null; 
 $sort = $_GET['sort'] ?? 'fecha';
 $order = $_GET['order'] ?? 'ASC';
-$tecnic = $_POST["tecnic"] ?? $_GET["tecnic"];
+
 
 $sortPermesos = ['fecha', 'prioritat'];
 $orderPermesos = ['asc', 'desc'];
@@ -33,7 +33,7 @@ $sentencia = $conn->prepare($sql);
 
 else{
 if (isset($_POST["tecnic"]) || isset($_GET["tecnic"])) {
-
+$tecnic = $_POST["tecnic"] ?? $_GET["tecnic"];
 
 $sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, i.prioritat, i.idDepartament, i.idTipologia, d.nom, t.nomTipologia 
 FROM INCIDENCIA i, DEPARTAMENT d, TIPOLOGIA t 

@@ -48,7 +48,7 @@ require_once 'connexio.php';
 <form class="mb-3" method="GET">
     <select name="filtre" class="form-select">
         <option value="tots">Tots</option>
-        <option value="sense_tecnic">Sense tècnic</option>
+        <option value="sense_tecnic">Sense tècnic asignat</option>
         <option value="obertes">Obertes</option>
         <option value="tancades">Tancades</option>
     </select>
