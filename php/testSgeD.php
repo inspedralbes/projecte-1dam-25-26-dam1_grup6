@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php include_once "encabezado.php"; ?>
 <html lang="ca">
 
 <head>
@@ -7,8 +8,7 @@
     <title>Consum per departaments</title>
 </head>
 <body>
-    <h1>Consum per departaments</h1>
-
+    <h1 class="mb-4 mt-4 text-center">Consum per departaments</h1>
 <?php
 require_once 'connexio.php';
 $sql = "SELECT * FROM vista_consum_departaments";
@@ -24,15 +24,7 @@ foreach ($departaments as $unDepartament) {
     $numArray[]   = $unDepartament["nombreIncidencies"];
 }
 ?>
-<tbody>
-<?php foreach ($departaments as $unDepartament): ?>
-<tr>
-<th scope="row"><?php echo $unDepartament["nomDepartament"] ?></th>
-<td><?php echo $unDepartament["tempsTotalDedicat"] ?> minuts</td>
-<td><?php echo $unDepartament["nombreIncidencies"] ?></td>
-</tr>
-<?php endforeach; ?>
-</tbody>
+
 
 <div style="width: 50%; margin: auto; margin-top: 30px; display: flex; justify-content: center; gap: 20px;">
 <canvas id="myChart" width="400" height="400"></canvas>

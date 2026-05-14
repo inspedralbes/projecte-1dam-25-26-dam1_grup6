@@ -23,12 +23,15 @@ $descripcio = $_POST["descripcio"];
     // Preparar la consulta SQL per inserir una nova casa
 
     $sentencia2= $conn->prepare("INSERT INTO INCIDENCIA
-    (descripcio, idDepartament)
+    (descripcio, idDepartament) 
     VALUES
     (?, ?)");
 
     $sentencia2->bind_param("si", $descripcio, $departament);
-    return $sentencia2->execute();
+    if ($sentencia2->execute()) {
+        return $conn->insert_id;
+    }
+    return false;
 
 }
 
@@ -46,12 +49,21 @@ include_once "encabezado.php";
 </head>
 
 <body>
+
+
+
+
+
+
     <?php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $resultado = registrar_inc($conn); // CAMBIO 2: guardar el resultado
+    $idIncidencia = registrar_inc($conn);
     if ($resultado) {
-        echo '<div class="alert alert-success text-center mt-3">Incidencia registrada correctament!</div>';
+            echo '<div class="alert alert-success text-center mt-3">Incidencia registrada correctament! <br>
+            <strong>!Recorda el identificador de la incidencia!  <br> ID Incidencia: ' . $idIncidencia . '</strong>
+            </div>';
     } else {
         echo '<div class="alert alert-danger text-center mt-3">Error al registrar la incidencia.</div>';
     }

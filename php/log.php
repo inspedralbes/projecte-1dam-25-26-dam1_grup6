@@ -1,3 +1,5 @@
+<?php include_once "encabezado.php"; ?>
+
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
 
@@ -106,9 +108,9 @@ foreach ($resultat as $fila) {
     <div class="row justify-content-center">
         <div class="col-lg-9">
             <div class="main-card">
-                <h1 class="text-center mb-4">Estadístiques d'Accés</h1>
+                <h1 class="text-center mb-4 mt-4">Estadístiques d'Accés</h1>
 
-                <div class="alert alert-light border text-center mb-4">
+                <div class="alert border text-center mb-4">
                     <p class="mb-0 text-muted small">Total d'accessos</p>
                     <div class="text-total"><?= $accessos_total ?></div>
                 </div>
@@ -116,7 +118,7 @@ foreach ($resultat as $fila) {
                 <div class="row">
                     <div class="col-md-6 mb-4">
                         <h2>Pàgines més visitades</h2>
-                        <table class="table table-sm table-striped table-dark rounded overflow-hidden">
+                        <table class="table table-sm table-striped table-primary overflow-hidden">
                             <thead>
                                 <tr>
                                     <th>Pàgina</th>
@@ -136,7 +138,7 @@ foreach ($resultat as $fila) {
 
                     <div class="col-md-6 mb-4">
                         <h2>Accessos per dia</h2>
-                        <table class="table table-sm table-striped table-dark rounded overflow-hidden">
+                        <table class="table table-sm table-striped table-primary  overflow-hidden">
                             <thead>
                                 <tr>
                                     <th>Dia</th>
@@ -165,7 +167,7 @@ foreach ($resultat as $fila) {
                             <input type="text" name="pagina" class="form-control" placeholder="/inici" value="<?= htmlspecialchars($pagina) ?>">
                         </div>
                         <div class="col-md-2">
-                            <button type="submit" class="btn btn-dark w-100">Buscar</button>
+                            <button type="submit" class="btn btn-primary w-100">Buscar</button>
                             
                         </div>
                     </div>
@@ -181,7 +183,7 @@ foreach ($resultat as $fila) {
                 <?php endif; ?>
 
                 <div class="text-center mt-3">
-                    <a href="index.php" class="btn btn-dark btn-sm px-4">Tornar</a>
+                    <a href="index.php" class="btn btn-primary">Tornar</a>
                 </div>
 
             </div>

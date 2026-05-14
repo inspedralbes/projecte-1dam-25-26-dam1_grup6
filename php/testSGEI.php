@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php include_once "encabezado.php"; ?>
 <html lang="ca">
 
 <head>
@@ -7,8 +8,7 @@
     <title>Estadisticas de Tecnics</title>
 </head>
 <body>
-    <h1>Estadisticas de Tecnics</h1>
-    
+        <h1 class="mb-4 mt-4 text-center">Estadisticas de Tecnics</h1>
 <?php
 require_once 'connexio.php';
 $sql = "SELECT * FROM vista_informe_tecnics";
@@ -35,14 +35,7 @@ foreach ($perTecnic as $nom => $dades) {
     $numArray[]   = $dades["num"];
 }
 ?>
-<tbody>
-<?php foreach ($tecnics as $unTecnic): ?>
-<tr>
-<th scope="row"><?php echo htmlspecialchars($unTecnic["nomTecnic"]) ?></th>
-<td><?php echo $unTecnic["tempsTotalDedicat"] ?> minuts</td>
-</tr>
-<?php endforeach; ?>
-</tbody>
+
 
 <div style="width: 50%; margin: auto; margin-top: 30px; display: flex; justify-content: center; gap: 20px;">
 <canvas id="myChart" width="400" height="400"></canvas>
