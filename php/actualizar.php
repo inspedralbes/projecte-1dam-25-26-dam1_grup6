@@ -1,3 +1,4 @@
+<?php include_once "encabezado.php"; ?>
 <?php
 include_once 'connexio.php';
 include_once 'mongo.php';
@@ -10,5 +11,29 @@ $sentencia = $conn->prepare("UPDATE INCIDENCIA SET idTipologia = ?, idTecnic = ?
 
 $sentencia->bind_param("iisi", $tipus,$tecnic ,$prioritat , $id);
 $sentencia->execute();
-header("Location: llistarAdmin.php");
+
+
+    if ($sentencia->execute()) {
+    echo "<div class='card mt-3 bg-success bg-opacity-25'>";
+    echo "<div class='card-body d-flex justify-content-center align-items-center gap-3 flex-wrap'>";
+    echo "<p>Modificacio registrada</p>";
+    echo "</div>";
+    echo "</div>";
+    
+    echo "<div class='d-flex justify-content-center gap-3 mt-3'>";
+    echo "<a href='llistarAdmin.php' class='btn btn-primary'>Tornar</a>";
+    echo "<a href='index.php' class='btn btn-primary'>Tornar a inici</a>";
+    echo "</div>";
+    } else {
+    echo "<div class='card mt-3 bg-danger bg-opacity-25'>";
+    echo "<div class='card-body d-flex align-items-center gap-3 flex-wrap'>";
+    echo "<p>Modificacio no registrada</p>";
+    echo "</div>";
+    echo "</div>";
+
+    echo "<div class='d-flex justify-content-center gap-3 mt-3'>";
+    echo "<a href='llistarAdmin.php' class='btn btn-primary'>Tornar</a>";
+    echo "<a href='index.php' class='btn btn-primary'>Tornar a inici</a>";
+    echo "</div>";
+    }
 ?>

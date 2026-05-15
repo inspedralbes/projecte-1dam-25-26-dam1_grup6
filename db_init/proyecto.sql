@@ -74,6 +74,17 @@ INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Hardware');
 INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Software');
 INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Consumibles');
 
+
+ALTER TABLE ACTUACIO DROP FOREIGN KEY ACTUACIO_ibfk_1;
+
+ALTER TABLE ACTUACIO ADD CONSTRAINT ACTUACIO_ibfk_1 
+    FOREIGN KEY (idIncidencia) 
+    REFERENCES INCIDENCIA(idIncidencia) 
+    ON DELETE CASCADE;
+
+
+
+
 CREATE OR REPLACE VIEW vista_informe_tecnics AS
 
 SELECT
@@ -102,7 +113,6 @@ LEFT JOIN ACTUACIO a
 
     ON i.idIncidencia = a.idIncidencia
 
-WHERE i.dataFinalitzacio IS NULL
 
 GROUP BY
 
@@ -116,7 +126,7 @@ GROUP BY
 
     i.descripcio,
 
-    i.fecha
+    i.fecha;
 
 CREATE OR REPLACE VIEW vista_consum_departaments AS
 
@@ -156,4 +166,4 @@ GROUP BY
 
     d.idDepartament,
 
-    d.nom
+    d.nom;

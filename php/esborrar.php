@@ -5,8 +5,13 @@ if (!isset($_GET["id"])) {
     exit("No hay id");
 }
 
-$id = $_GET['id'];
+$id = (int) $_GET['id'];
 $sentencia = $conn->prepare("DELETE FROM INCIDENCIA WHERE idIncidencia = ?");
 $sentencia->bind_param("i", $id);
-$sentencia->execute();
-header("Location: llistarAdmin.php");
+
+if ($sentencia->execute()) {
+    header("Location: llistarAdmin.php");
+    exit();
+} else {
+    exit("Error al eliminar la incidencia.");
+}

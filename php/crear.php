@@ -3,6 +3,7 @@
 //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
 require_once 'connexio.php';
 include_once 'mongo.php';
+include_once "encabezado.php";
 // Un cop inclòs el fitxer connexio.php, ja podeu utilitzar la variable $conn per a fer les consultes a la base de dades.
 
 /**
@@ -23,20 +24,21 @@ $descripcio = $_POST["descripcio"];
     // Preparar la consulta SQL per inserir una nova casa
 
     $sentencia2= $conn->prepare("INSERT INTO INCIDENCIA
-    (descripcio, idDepartament)
+    (descripcio, idDepartament) 
     VALUES
     (?, ?)");
 
     $sentencia2->bind_param("si", $descripcio, $departament);
-    return $sentencia2->execute();
+    if ($sentencia2->execute()) {
+        return $conn->insert_id;
+    }
+    return false;
 
 }
 
 ?>
+
 <!DOCTYPE html>
-<?php  
-include_once "encabezado.php";
-?>
 <html lang="ca">
 
 <head>
@@ -46,12 +48,20 @@ include_once "encabezado.php";
 </head>
 
 <body>
-    <?php
+
+
+
+
+
+
+<?php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $resultado = registrar_inc($conn); // CAMBIO 2: guardar el resultado
-    if ($resultado) {
-        echo '<div class="alert alert-success text-center mt-3">Incidencia registrada correctament!</div>';
+    $idIncidencia = registrar_inc($conn);
+    if ($idIncidencia) {
+            echo '<div class="alert alert-success text-center mt-3">Incidencia registrada correctament! <br>
+            <strong>!Recorda el identificador de la incidencia!  <br> ID Incidencia: ' . $idIncidencia . '</strong>
+            </div>';
     } else {
         echo '<div class="alert alert-danger text-center mt-3">Error al registrar la incidencia.</div>';
     }
