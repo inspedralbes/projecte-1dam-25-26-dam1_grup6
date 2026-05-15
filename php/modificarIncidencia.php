@@ -1,9 +1,9 @@
 <?php
 require_once 'connexio.php';
 include_once 'mongo.php';
+include_once "encabezado.php";
 ?>
 <!DOCTYPE html>
-<?php include_once "encabezado.php"; ?>
 <html lang="ca">
 
 <head>
@@ -13,43 +13,71 @@ include_once 'mongo.php';
 </head>
 
 <body>
-    <h1>Modificar Incidencia</h1>
-    <?php
+
+<?php
+$sql1 = "SELECT idTipologia, nomTipologia FROM TIPOLOGIA";
+$sentencia1 = $conn->query($sql1);
+
+$sql2 = "SELECT idTecnic, nom AS nomTecnic FROM TECNIC";
+$sentencia2 = $conn->query($sql2);
+
+
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         modificar_incidencia($conn);
     } else {
-        ?>
-        <form method="POST" action="actualizar.php" onsubmit="return valModi()">
-            <input type="hidden" name="id" value="<?php echo $_GET["id"] ?>">
-            <fieldset>
-                <legend>Modifica incidencia</legend>
-                <br><br>
-                <select name="tipus" id="tipus" required>
-                    <option value="" selected> -- Assignar tipus --</option>
-                    <option value="1">Xarxes</option>
-                    <option value="2">Software</option>
-                    <option value="3">Hardware</option>
-                </select>
-                <br><br>
-                <select name="tecnic" id="tecnic" required>
-                    <option value="" selected>-- Asignar tecnic --</option>";
-                    <option value="1">Juan</option>
-                    <option value="2">Alex</option>
-                    <option value="3">Luis</option>
-                </select>
-                <br><br>
-                <select name="prioritat" id="prioritat" required>
-                    <option value="" selected>-- Asignar prioritat --</option>
-                    <option value="alta">Alta</option>
-                    <option value="media">Media</option>
-                    <option value="baja">Baja</option>
-                </select>
-                <br><br>
-                <input type="submit" value="Registrar">
-            </fieldset>
-        </form>    
-        
-        <?php
-    }
-    ?>
+echo '<div class="container mt-5">';
+echo '<div class="row justify-content-center">';
+echo '<div class="col-md-6">';
+echo '<div class="card-body">';
+echo '<h2 class="card-title text-center mb-4">Modificar Incidencia</h2>';
+echo '<form method="POST" action="actualizar.php">';
+
+echo '<input type="hidden" name="id" value="' . $_GET["id"] . '">';
+
+echo '<div class="mb-3">';
+echo '<label class="form-label fw-bold">Tipologia:</label>';
+echo '<select name="tipus" id="tipus" class="form-select" required>';
+echo '<option value="" selected>-- Selecciona tipologia --</option>';
+while($fila1 = $sentencia1->fetch_assoc()) {
+    echo '<option value="' . $fila1["idTipologia"] . '">' . $fila1["nomTipologia"] . '</option>';
+}
+echo '</select>';
+echo '</div>';
+
+
+
+echo '<div class="mb-3">';
+echo '<label class="form-label fw-bold">Tecnic:</label>';
+echo '<select name="tecnic" id="tecnic" class="form-select" required>';
+echo '<option value="" selected>-- Selecciona tecnic --</option>';
+while($fila2 = $sentencia2->fetch_assoc()) {
+    echo '<option value="' . $fila2["idTecnic"] . '">' . $fila2["nomTecnic"] . '</option>';
+}
+echo '</select>';
+echo '</div>';
+
+
+
+echo '<div class="mb-3">';
+echo '<label class="form-label fw-bold">Prioritat:</label>';
+echo '<select name="prioritat" id="prioritat" class="form-select" required>';
+echo '<option value="" selected>-- Asignar prioritat --</option>';
+echo '<option value="alta">Alta</option>';
+echo '<option value="media">Media</option>';
+echo '<option value="baja">Baja</option>';
+echo '</select>';
+echo '</div>';
+
+
+echo '<div class="d-grid">';
+echo '<button type="submit" class="btn btn-primary">Modificar</button>';
+echo '</div>';
+
+echo '</form>';
+echo '</div>';
+echo '</div>';
+echo '</div>';
+echo '</div>';
+   }
+?>
