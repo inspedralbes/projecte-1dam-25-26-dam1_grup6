@@ -1,5 +1,7 @@
-<?php include_once "encabezado.php"; ?>
-
+<?php
+    include_once "encabezado.php";
+    include_once "pie.php";
+     ?>
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
 
@@ -182,9 +184,10 @@ foreach ($resultat as $fila) {
                     <p class="text-muted">Introdueix almenys una data o una pàgina amb "/" al principi per buscar.</p>
                 <?php endif; ?>
 
-                <div class="text-center mt-3">
-                    <a href="index.php" class="btn btn-primary">Tornar</a>
-                </div>
+        <div class="d-flex justify-content-center gap-3 mt-5 mb-4">
+         <a href="llistarAdmin.php" class="btn btn-primary">Tornar</a>
+        <a href="index.php" class="btn btn-primary">Tornar a inici</a>
+    </div>
 
             </div>
         </div>

@@ -21,7 +21,8 @@ $sentencia->execute();
     echo "</div>";
     
     echo "<div class='d-flex justify-content-center gap-3 mt-3'>";
-    echo "<a href='index.php' class='btn btn-primary'>Tornar</a>";
+    echo "<a href='llistarAdmin.php' class='btn btn-primary'>Tornar</a>";
+    echo "<a href='index.php' class='btn btn-primary'>Tornar a inici</a>";
     echo "</div>";
     } else {
     echo "<div class='card mt-3 bg-danger bg-opacity-25'>";
@@ -31,7 +32,8 @@ $sentencia->execute();
     echo "</div>";
 
     echo "<div class='d-flex justify-content-center gap-3 mt-3'>";
-    echo "<a href='index.php' class='btn btn-primary'>Tornar</a>";
+    echo "<a href='llistarAdmin.php' class='btn btn-primary'>Tornar</a>";
+    echo "<a href='index.php' class='btn btn-primary'>Tornar a inici</a>";
     echo "</div>";
     }
 ?>

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <?php  
-include_once "encabezado.php";
 include_once "mongo.php";
+    include_once "encabezado.php";
+    include_once "pie.php";
 ?>
 <html lang="en">
 <head>

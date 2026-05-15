@@ -2,10 +2,10 @@
 
 require_once 'connexio.php';
 include_once 'mongo.php';
+    include_once "encabezado.php";
 
 ?>
 <!DOCTYPE html>
-<?php include_once "encabezado.php"; ?>
 <html lang="ca">
 
 <head>
@@ -26,10 +26,10 @@ include_once 'mongo.php';
 
         echo '<h2 class="mb-4 mt-4 text-center">Llista estadistiques dels tecnics</h2>';
         try {
-            $sentenciaTecnics = $conn->query("SELECT 
+    $sentenciaTecnics = $conn->query("SELECT 
     t.idTecnic,
     t.nom AS nomTecnic,
-    COUNT(DISTINCT i.idIncidencia) AS total_incidencies_per_tecnic,
+    COUNT(DISTINCT CASE WHEN i.dataFinalitzacio IS NOT NULL THEN i.idIncidencia END) AS total_incidencies_per_tecnic,
     COALESCE(SUM(a.temps), 0) AS temps_total_per_tecnic
 FROM TECNIC t
 LEFT JOIN INCIDENCIA i ON t.idTecnic = i.idTecnic
@@ -70,12 +70,43 @@ GROUP BY t.idTecnic, t.nom;");
 
 
 
+
+
+        <div class="d-flex justify-content-end mt-4">
+            <h4 class="mb-1">Buscador incidencia per codi</h4>
+        </div>
+            <div class="d-flex justify-content-end gap-2">
+                <form method="POST" action="estadisticaTecnic.php" class="d-flex gap-2">
+                    <input type="number" id="idInci" name="idInci" class="form-control" style="width: 150px;">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                    <button type="submit" id="tot" name="tot" class="btn btn-primary">Veure tots</button>
+                </form>
+            </div>
+
+
     <?php 
+
+
+
+
+    $tecnic = $_POST["tecnic"] ?? $_GET["tecnic"] ?? null;
+
+
+
 
         echo '<h2 class="mb-4 mt-5 text-center">Llista de incidencies amb tecnics y temps dedicat</h2>';
         try {
-            $sentenciaTecnics = $conn->query("SELECT * FROM vista_informe_tecnics");
-            $result = $sentenciaTecnics->fetch_all(MYSQLI_ASSOC);
+
+
+if (!empty($_POST["idInci"])) {
+    $idInci = (int)$_POST["idInci"];
+    $sentencia = $conn->prepare("SELECT * FROM vista_informe_tecnics WHERE idIncidencia = ?");
+    $sentencia->bind_param("i", $idInci);
+    $sentencia->execute();
+    $result = $sentencia->get_result()->fetch_all(MYSQLI_ASSOC);
+} else {
+    $result = $conn->query("SELECT * FROM vista_informe_tecnics")->fetch_all(MYSQLI_ASSOC);
+}
 
             if (count($result) > 0) {
                         foreach ($result as $fila):
@@ -103,14 +134,21 @@ GROUP BY t.idTecnic, t.nom;");
 
             }
             else {
-                echo "<p> No s'han trobat incidencies per registrar.</p>";
+    echo "<div class='card mt-3 bg-danger bg-opacity-25 '>";
+    echo "<div class='card-body gap-3 flex-wrap'>";
+    echo "<p>No s'han trobat incidencies per registrar</p>";
+    echo "</div>";
+    echo "</div>";
             } 
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             echo "<p> ERROR </p>";
         }
     ?>
 
-
+    <div class="d-flex justify-content-center gap-3 mt-3 mb-5">
+         <a href="llistarAdmin.php" class="btn btn-primary">Tornar</a>
+        <a href="index.php" class="btn btn-primary">Tornar a inici</a>
+    </div>
 
 
 </body>

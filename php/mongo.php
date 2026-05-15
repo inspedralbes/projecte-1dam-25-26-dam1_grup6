@@ -29,7 +29,6 @@ $collection->insertOne([
     'rtime' => $r_time,
     'nav' => $user_agent
 ]);
-echo "Dades inserides a demo .\n";
 
 
 // Obtenir tots els documents de la col·lecció users de la BBDD demo

@@ -3,6 +3,8 @@
     //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
     require_once 'connexio.php';
     include_once 'mongo.php';
+    include_once "encabezado.php";
+    include_once "pie.php";
     // Un cop inclòs el fitxer connexio.php, ja podeu utilitzar la variable $conn per a fer les consultes a la base de dades.
 
 
@@ -42,7 +44,6 @@ else{
 
 
 <!DOCTYPE html>
-<?php include_once "encabezado.php"; ?>
 <html lang="ca">
 
 <head>

@@ -75,3 +75,11 @@ new Chart(ctx2, {
     }
 });
 </script>
+
+        <div class="d-flex justify-content-center gap-3 mt-5 mb-4">
+         <a href="llistarAdmin.php" class="btn btn-primary">Tornar</a>
+        <a href="index.php" class="btn btn-primary">Tornar a inici</a>
+    </div>
+
+    </body>
+</html>

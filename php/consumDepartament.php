@@ -2,11 +2,12 @@
 
 require_once 'connexio.php';
 include_once 'mongo.php';
+    include_once "encabezado.php";
+    include_once "pie.php";
 
 ?>
 <!DOCTYPE html>
 <html lang="ca">
-<?php include_once "encabezado.php"; ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,6 +47,11 @@ include_once 'mongo.php';
 
         <div class="d-flex justify-content-center gap-3 mt-3">
         <a href="testSgeD.php" class="btn btn-primary">Fes-ho a quesitos</a>
+    </div>
+
+        <div class="d-flex justify-content-center gap-3 mt-5 mb-4">
+         <a href="llistarAdmin.php" class="btn btn-primary">Tornar</a>
+        <a href="index.php" class="btn btn-primary">Tornar a inici</a>
     </div>
 
 </body>
