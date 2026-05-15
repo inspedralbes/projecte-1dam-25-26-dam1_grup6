@@ -1,21 +1,34 @@
 <?php
+
 include_once 'connexio.php';
-include_once 'mongo.php';
 
 if (!empty($_POST["btningresar"])) {
     if (empty($_POST["usuario"]) and empty($_POST["password"])) {
         echo '<p> Los campos estan vacios</p>';
-    } else {
+        }
+    } elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
         $usuario=$_POST["usuario"];
         $clave=$_POST["password"];
-        $sentencia=$conn->query("SELECT * FROM USUARIO WHERE nombre=$usuario and clave=$clave");
-        if ($datos=$sentencia->fetch_object()) {
-            header("location:index.php");
+        $stmt = $conn->prepare("SELECT nom, clave FROM USUARI WHERE nom = ? AND clave = ?");
+        $stmt->bind_param("ss", $usuario, $clave);
+        $stmt->execute();
+
+        $result = $stmt->store_result();
+
+        if ($result['nom'] == $usuario) {
+            if ($result['clave'] == $clave) {
+                header("location:index.php");
+            } else {
+            echo '<p>Acceso denegado.</p>';
+        } 
         } else {
             echo '<p>Acceso denegado.</p>';
+
         }
     }
-}
+
+include_once 'mongo.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="ca">
@@ -26,7 +39,7 @@ if (!empty($_POST["btningresar"])) {
     </head>
     <body>
         <div>
-            <form method="post" action="">
+            <form method="post" action="" onsubmit="return valLog()">
                 <h2 class="title">BIENVENIDO</h2>
 
                 <div>
@@ -37,6 +50,9 @@ if (!empty($_POST["btningresar"])) {
                 <div>
                     <h5>Contraseña</h5>
                     <input type="password" id="input" class="input" name="password">
+                </div>
+                <div>
+                    <input name="btningresar" type="submit" value="INICIAR SESION">
                 </div>
             </form>
         </div>

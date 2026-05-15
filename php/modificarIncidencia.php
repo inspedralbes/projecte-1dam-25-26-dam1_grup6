@@ -20,7 +20,7 @@ include_once 'mongo.php';
         modificar_incidencia($conn);
     } else {
         ?>
-        <form method="POST" action="actualizar.php">
+        <form method="POST" action="actualizar.php" onsubmit="return valModi()">
             <input type="hidden" name="id" value="<?php echo $_GET["id"] ?>">
             <fieldset>
                 <legend>Modifica incidencia</legend>

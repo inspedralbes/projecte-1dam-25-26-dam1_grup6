@@ -61,6 +61,8 @@ INSERT INTO DEPARTAMENT (nom) VALUES ('Quimica');
 INSERT INTO DEPARTAMENT (nom) VALUES ('Lengua');
 INSERT INTO DEPARTAMENT (nom) VALUES ('Informatica');
 
+INSERT INTO USUARI (nom, clave) VALUES ('admin', '123');
+
 
 INSERT INTO TECNIC (nom) VALUES ('Juan');
 INSERT INTO TECNIC (nom) VALUES ('Alex');

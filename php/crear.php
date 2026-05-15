@@ -70,7 +70,7 @@ echo '<div class="col-md-6">';
 echo '<div class="card-body">';
 echo '<h2 class="card-title text-center mb-4">Registrar Incidencia</h2>';
 
-echo '<form method="POST" action="crear.php">';
+echo '<form method="POST" action="crear.php" onsubmit="return formulari()">';
 
 echo '<div class="mb-3">';
 echo '<label class="form-label fw-bold">Departament:</label>';

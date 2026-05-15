@@ -122,7 +122,7 @@ function finalitzar_act($conn) {
 <div class="col-md-6">
 <div class="card-body">
 <h4 class="card-title text-center mb-4">Registrar Actuació</h4>
-<form method="POST" action="registrarAct.php">
+<form method="POST" action="registrarAct.php" onsubmit="return valActua()">
     <input type="hidden" name="idIncidencia" value="<?php echo $_GET["id"] ?>">
     
     <div class="mb-3">
