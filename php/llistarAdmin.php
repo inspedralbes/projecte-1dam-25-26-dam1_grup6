@@ -2,11 +2,14 @@
 
 //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
 require_once 'connexio.php';
+include_once 'mongo.php';
+include_once "pie.php";
+include_once "encabezado.php";
 // Un cop inclòs el fitxer connexio.php, ja podeu utilitzar la variable $conn per a fer les consultes a la base de dades.
 
 ?>
 <!DOCTYPE html>
-<?php include_once "encabezado.php"; ?>
+
 <html lang="ca">
 
 <head>
@@ -17,7 +20,20 @@ require_once 'connexio.php';
 
 <body>
 
-<h1 class="fw-bold text-center mt-3 mb-5">Panell administrador</h1>
+
+
+<div class="text-center mt-3">
+    <div class="col-md-12">
+<h1 class="mt-3">Panell administrador</h1>
+    </div>
+    <div class="d-flex flex-column align-items-end mb-3">
+        <p class="mb-1 text-muted small">Buscador incidencia per codi</p>
+        <form method="POST" action="llistarAdmin.php" class="d-flex gap-2">
+            <input type="number" id="idInci" name="idInci" class="form-control" style="width: 150px;">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+    </div>
+</div>
 
 
 <div class="card pt-3 pb-3">
@@ -35,7 +51,7 @@ require_once 'connexio.php';
 <form class="mb-3" method="GET">
     <select name="filtre" class="form-select">
         <option value="tots">Tots</option>
-        <option value="sense_tecnic">Sense tècnic</option>
+        <option value="sense_tecnic">Sense tècnic asignat</option>
         <option value="obertes">Obertes</option>
         <option value="tancades">Tancades</option>
     </select>
@@ -57,11 +73,28 @@ $orderPermesos = ['asc', 'desc'];
 if (!in_array($sort, $sortPermesos)) $sort = 'fecha';
 if (!in_array(strtolower($order), $orderPermesos)) $order = 'ASC';
 
-
-
     $filtre = $_GET['filtre'] ?? '';
 
 
+if (!empty($_POST["idInci"])) {
+
+    $idInci = $_POST["idInci"];
+
+$sql = "SELECT i.*, t.nomTipologia, d.nom AS nomDepartament, c.nom AS nomTecnic 
+    FROM INCIDENCIA i
+    LEFT JOIN TIPOLOGIA t ON i.idTipologia = t.idTipologia
+    LEFT JOIN DEPARTAMENT d ON i.idDepartament = d.idDepartament
+    LEFT JOIN TECNIC c ON i.idTecnic = c.idTecnic
+    WHERE i.idIncidencia = ?";
+
+$sentencia = $conn->prepare($sql);
+    $sentencia->bind_param("i", $idInci);
+    $sentencia->execute();
+        $result = $sentencia->get_result();
+}
+
+
+else {
 if ($filtre == 'sense_tecnic') {
     $sql = "SELECT i.*, t.nomTipologia, d.nom AS nomDepartament 
     FROM INCIDENCIA i
@@ -97,6 +130,8 @@ if ($filtre == 'sense_tecnic') {
     ORDER BY $sort $order";
 }
     $result = $conn->query($sql);
+
+}
 
     // Comprovar si hi ha resultats
         if ($result->num_rows > 0) {
@@ -144,7 +179,7 @@ echo "<a href='?sort=prioritat&order=desc&filtre=" . $filtre . "' class='btn btn
     // Tancar la connexió
     $conn->close();
     ?>
-    <div class="d-flex justify-content-center gap-3 mt-3">
+    <div class="d-flex justify-content-center gap-3 mt-3 mb-5">
         <a href="index.php" class="btn btn-primary">Tornar a inici</a>
     </div>
 

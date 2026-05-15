@@ -2,15 +2,16 @@
 
 //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
 require_once 'connexio.php';
+include_once 'mongo.php';
+include_once "pie.php";
+include_once "encabezado.php";
 // Un cop inclòs el fitxer connexio.php, ja podeu utilitzar la variable $conn per a fer les consultes a la base de dades.
 
 
 $result = null; 
-
-
-
 $sort = $_GET['sort'] ?? 'fecha';
 $order = $_GET['order'] ?? 'ASC';
+
 
 $sortPermesos = ['fecha', 'prioritat'];
 $orderPermesos = ['asc', 'desc'];
@@ -19,10 +20,23 @@ if (!in_array($sort, $sortPermesos)) $sort = 'fecha';
 if (!in_array(strtolower($order), $orderPermesos)) $order = 'ASC';
 
 
+if (!empty($_POST["idInci"])) {
+    $idInci = $_POST["idInci"];
+
+$sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, i.idDepartament, d.nom, i.prioritat, i.idTipologia, t.nomTipologia
+        FROM INCIDENCIA i, DEPARTAMENT d, TIPOLOGIA t 
+        WHERE i.idIncidencia = ? AND i.idDepartament = d.idDepartament AND i.idTipologia = t.idTipologia ORDER BY $sort $order"; 
+
+$sentencia = $conn->prepare($sql);
+    $sentencia->bind_param("i", $idInci);
+    $sentencia->execute();
+        $result = $sentencia->get_result();
+}
 
 
+else{
 if (isset($_POST["tecnic"]) || isset($_GET["tecnic"])) {
-    $tecnic = $_POST["tecnic"] ?? $_GET["tecnic"];
+$tecnic = $_POST["tecnic"] ?? $_GET["tecnic"];
 
 $sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, i.prioritat, i.idDepartament, i.idTipologia, d.nom, t.nomTipologia 
 FROM INCIDENCIA i, DEPARTAMENT d, TIPOLOGIA t 
@@ -33,13 +47,12 @@ $sentencia = $conn->prepare($sql);
     $sentencia->execute();
 
     $result = $sentencia->get_result();
-
-
 }
-
+}
 ?>
+
+
 <!DOCTYPE html>
-<?php include_once "encabezado.php"; ?>
 <html lang="ca">
 
 <head>
@@ -52,10 +65,19 @@ $sentencia = $conn->prepare($sql);
 
 
 <div class="text-center mt-3">
-    <h2 class="mt-3">Llistat d'incidencies</h2>
+    <div class="col-md-12">
+    <h1 class="mt-3">Panell tecnic</h1>
+    </div>
+    <div class="d-flex flex-column align-items-end mb-3">
+        <p class="mb-1 text-muted small">Buscador incidencia per codi</p>
+        <form method="POST" action="llistarTecnics.php" class="d-flex gap-2">
+            <input type="number" id="idInci" name="idInci" class="form-control" style="width: 150px;">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+    </div>
 </div>
 
-
+<h2 class="mt-3 text-center">Llistat d'incidencies</h2>
 <?php
 $sql2 = "SELECT idTecnic, nom FROM TECNIC";
 $sentencia2 = $conn->query($sql2);

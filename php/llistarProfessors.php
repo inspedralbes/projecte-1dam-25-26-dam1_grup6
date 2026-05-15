@@ -2,6 +2,9 @@
 
     //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
     require_once 'connexio.php';
+    include_once 'mongo.php';
+    include_once "encabezado.php";
+    include_once "pie.php";
     // Un cop inclòs el fitxer connexio.php, ja podeu utilitzar la variable $conn per a fer les consultes a la base de dades.
 
 
@@ -14,19 +17,33 @@
 
     $tecnic = $_POST["tecnic"] ?? $_GET["tecnic"] ?? null;
 
+if (!empty($_POST["idInci"])) {
 
-    $sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, i.idDepartament, d.nom 
+    $idInci = $_POST["idInci"];
+
+$sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, i.idDepartament, d.nom 
+        FROM INCIDENCIA i, DEPARTAMENT d 
+        WHERE i.idIncidencia = ? AND i.idDepartament = d.idDepartament ORDER BY $sort $order"; 
+
+$sentencia = $conn->prepare($sql);
+    $sentencia->bind_param("i", $idInci);
+    $sentencia->execute();
+        $result = $sentencia->get_result();
+}
+
+else{
+            $sql = "SELECT i.idIncidencia, i.descripcio, i.fecha, i.idDepartament, d.nom 
             FROM INCIDENCIA i, DEPARTAMENT d 
             WHERE i.idDepartament = d.idDepartament ORDER BY $sort $order"; 
 
         $result = $conn->query($sql);
+}
+        ?>
 
 
 
 
-?>
 <!DOCTYPE html>
-<?php include_once "encabezado.php"; ?>
 <html lang="ca">
 
 <head>
@@ -38,19 +55,35 @@
 <body>
 
 <div class="text-center mt-3">
-    <h2 class="mb-3">Llistat d'incidencies</h2>
-    <div class="d-flex justify-content-center gap-3">
-        <a href="crear.php" class="btn btn-primary">Crear incidencia</a>
+    <div class="col-md-12">
+        <h1 class="mb-3">Panell professorat</h1>
+        <div class="d-flex justify-content-end">
+            <p class="mb-1">Buscador incidencia per codi</p>
+        </div>
+        <div class="d-flex align-items-center">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 d-flex justify-content-center">
+                <a href="crear.php" class="btn btn-primary">Crear incidencia</a>
+            </div>
+            <div class="col-md-4 d-flex justify-content-end gap-2">
+                <form method="POST" action="llistarProfessors.php" class="d-flex gap-2">
+                    <input type="number" id="idInci" name="idInci" class="form-control" style="width: 150px;">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
+
+
+
+
+        <h2 class="mb-3 mt-5 text-center">Llistat d'incidencies</h2>
     <?php
 
-    // Consulta SQL per obtenir totes les files de la taula 'cases'
 
-
-
-
+    // Consulta SQL per obtenir totes les files de la taula 'cases
     // Comprovar si hi ha resultats
     if ($result->num_rows > 0) {
 

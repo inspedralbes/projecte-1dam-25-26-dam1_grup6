@@ -9,6 +9,11 @@ FLUSH PRIVILEGES;
 
 USE proyecto;
 
+CREATE TABLE USUARI(
+    idUsuari INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    clave VARCHAR(50) NOT NULL
+);
 
 CREATE TABLE DEPARTAMENT(
     idDepartament INT AUTO_INCREMENT PRIMARY KEY,
@@ -56,6 +61,8 @@ INSERT INTO DEPARTAMENT (nom) VALUES ('Quimica');
 INSERT INTO DEPARTAMENT (nom) VALUES ('Lengua');
 INSERT INTO DEPARTAMENT (nom) VALUES ('Informatica');
 
+INSERT INTO USUARI (nom, clave) VALUES ('admin', '123');
+
 
 INSERT INTO TECNIC (nom) VALUES ('Juan');
 INSERT INTO TECNIC (nom) VALUES ('Alex');
@@ -66,6 +73,17 @@ INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Red');
 INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Hardware');
 INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Software');
 INSERT INTO TIPOLOGIA (nomTipologia) VALUES ('Consumibles');
+
+
+ALTER TABLE ACTUACIO DROP FOREIGN KEY ACTUACIO_ibfk_1;
+
+ALTER TABLE ACTUACIO ADD CONSTRAINT ACTUACIO_ibfk_1 
+    FOREIGN KEY (idIncidencia) 
+    REFERENCES INCIDENCIA(idIncidencia) 
+    ON DELETE CASCADE;
+
+
+
 
 CREATE OR REPLACE VIEW vista_informe_tecnics AS
 
@@ -95,7 +113,6 @@ LEFT JOIN ACTUACIO a
 
     ON i.idIncidencia = a.idIncidencia
 
-WHERE i.dataFinalitzacio IS NULL
 
 GROUP BY
 
@@ -109,7 +126,7 @@ GROUP BY
 
     i.descripcio,
 
-    i.fecha
+    i.fecha;
 
 CREATE OR REPLACE VIEW vista_consum_departaments AS
 
@@ -149,4 +166,4 @@ GROUP BY
 
     d.idDepartament,
 
-    d.nom
+    d.nom;

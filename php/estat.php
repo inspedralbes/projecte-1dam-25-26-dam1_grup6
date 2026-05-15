@@ -1,6 +1,7 @@
 <?php include_once "encabezado.php"; ?>
 <?php
-require_once "connexio.php";
+require_once 'connexio.php';
+include_once 'mongo.php';
 
 if (!isset($_GET["id"])) {
     exit("No hi ha id");
@@ -52,5 +53,6 @@ if ($result->num_rows > 0) {
 ?>
 
     <div class="d-flex justify-content-center gap-3 mt-3">
+        <a href="llistarProfessors.php" class="btn btn-primary">Tornar</a>
         <a href="index.php" class="btn btn-primary">Tornar a inici</a>
     </div>

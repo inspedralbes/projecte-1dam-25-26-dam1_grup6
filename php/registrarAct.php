@@ -2,6 +2,7 @@
 
 //Sempre volem tenir una connexió a la base de dades, així que la creem al principi del fitxer
 require_once 'connexio.php';
+include_once 'mongo.php';
 // Un cop inclòs el fitxer connexio.php, ja podeu utilitzar la variable $conn per a fer les consultes a la base de dades.
 
 function registrar_act($conn) {
@@ -18,7 +19,6 @@ function registrar_act($conn) {
 
     $sentenciaAct->bind_param("siisi", $descripcio, $visible, $temps, $fecha, $idIncidencia);
    
-
     if ($sentenciaAct->execute()) {
     echo "<div class='card mt-3 bg-success bg-opacity-25'>";
     echo "<div class='card-body d-flex justify-content-center align-items-center gap-3 flex-wrap'>";
@@ -122,7 +122,7 @@ function finalitzar_act($conn) {
 <div class="col-md-6">
 <div class="card-body">
 <h4 class="card-title text-center mb-4">Registrar Actuació</h4>
-<form method="POST" action="registrarAct.php">
+<form method="POST" action="registrarAct.php" onsubmit="return valActua()">
     <input type="hidden" name="idIncidencia" value="<?php echo $_GET["id"] ?>">
     
     <div class="mb-3">

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php include_once "encabezado.php"; ?>
 <html lang="ca">
 
 <head>
@@ -7,42 +8,31 @@
     <title>Estadisticas de Tecnics</title>
 </head>
 <body>
-    <h1>Estadisticas de Tecnics</h1>
-    
+        <h1 class="mb-4 mt-4 text-center">Estadisticas de Tecnics</h1>
 <?php
 require_once 'connexio.php';
-$sql = "SELECT * FROM vista_informe_tecnics";
+$sql = "SELECT 
+    t.nom AS nomTecnic,
+    COALESCE(SUM(a.temps), 0) AS tempsTotalDedicat,
+ COUNT(DISTINCT CASE WHEN i.dataFinalitzacio IS NOT NULL THEN i.idIncidencia END) AS num
+FROM TECNIC t
+LEFT JOIN INCIDENCIA i ON t.idTecnic = i.idTecnic
+LEFT JOIN ACTUACIO a ON i.idIncidencia = a.idIncidencia
+GROUP BY t.idTecnic, t.nom";
 $resultat = $conn->query($sql);
 $tecnics = $resultat->fetch_all(MYSQLI_ASSOC);
 $tempsArray = array();
 $deptsArray = array();
 $numArray = array();
 
-// Agrupar per tècnic (la vista té una fila per incidència)
-$perTecnic = [];
-foreach ($tecnics as $t) {
-    $nom = $t["nomTecnic"];
-    if (!isset($perTecnic[$nom])) {
-        $perTecnic[$nom] = ["temps" => 0, "num" => 0];
-    }
-    $perTecnic[$nom]["temps"] += (int)$t["tempsTotalDedicat"];
-    $perTecnic[$nom]["num"]++;
-}
 
-foreach ($perTecnic as $nom => $dades) {
-    $deptsArray[] = $nom;
-    $tempsArray[] = $dades["temps"];
-    $numArray[]   = $dades["num"];
+foreach ($tecnics as $t) {
+    $deptsArray[] = $t["nomTecnic"];
+    $tempsArray[] = (int)$t["tempsTotalDedicat"];
+    $numArray[]   = (int)$t["num"];
 }
 ?>
-<tbody>
-<?php foreach ($tecnics as $unTecnic): ?>
-<tr>
-<th scope="row"><?php echo htmlspecialchars($unTecnic["nomTecnic"]) ?></th>
-<td><?php echo $unTecnic["tempsTotalDedicat"] ?> minuts</td>
-</tr>
-<?php endforeach; ?>
-</tbody>
+
 
 <div style="width: 50%; margin: auto; margin-top: 30px; display: flex; justify-content: center; gap: 20px;">
 <canvas id="myChart" width="400" height="400"></canvas>
@@ -93,3 +83,11 @@ new Chart(ctx2, {
     }
 });
 </script>
+
+        <div class="d-flex justify-content-center gap-3 mt-5 mb-4">
+         <a href="llistarAdmin.php" class="btn btn-primary">Tornar</a>
+        <a href="index.php" class="btn btn-primary">Tornar a inici</a>
+    </div>
+</body>
+</html>
+

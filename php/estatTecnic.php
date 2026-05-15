@@ -1,6 +1,7 @@
 <?php include_once "encabezado.php"; ?>
 <?php
-require_once "connexio.php";
+require_once 'connexio.php';
+include_once 'mongo.php';
 
 if (!isset($_GET["id"])) {
     exit("No hi ha id");

@@ -3,7 +3,30 @@
 # 2. mysql (la base de dades), que no és accessible des de l'exterior (el primer cop pot trigar diversos minuts, mireu els logs)
 # 3. adminer (un client web per gestionar el mysql), que el trobaràs a http://localhost:8081
 # 5, mongo la BBDD no sql
-# 6, express js, (un client web per gestionar el mongodv) que el trobaràs a http://localhost:8081
+# 6, express js, (un client web per gestionar el mongodb) que el trobaràs a http://localhost:8081
+# ############################################
+# ############################################
+# #########   ATENCIÓ        #################
+# ############################################
+# ############################################
+# HAS DE TENIR UN FITXER COMPOSER amb la dependència de mongo
+# composer.json
+# {
+#    "name": "ElTeuNom/ElTeuProjecte",
+#    "autoload": {
+#    },
+#    "authors": [
+#        {
+#            "name": "ElTeuNom"
+#        }
+#    ],
+#    "require": {
+#        "mongodb/mongodb": "^2.1"
+#    }
+#}
+#
+# I a producció hauràs d'executar 
+# composer install
 
 services:
   apache_php_mysql_mongodb:
@@ -24,7 +47,6 @@ services:
       VAR1: "sóc una pera i estic al docker-compose"
     depends_on:
        - db
-       - mongo
 
   db:
     # Tota la informació d'aquesta imatge està https://dockerhub.com/_/mysql
