@@ -9,9 +9,9 @@ include_once "encabezado.php";
 
 
 $result = null; 
+$tecnic = $_POST["tecnic"] ?? $_GET["tecnic"] ?? '';
 $sort = $_GET['sort'] ?? 'fecha';
 $order = $_GET['order'] ?? 'ASC';
-
 
 $sortPermesos = ['fecha', 'prioritat'];
 $orderPermesos = ['asc', 'desc'];
