@@ -65,7 +65,7 @@ function finalitzar_act($conn) {
     $sentenciaInc->bind_param("si", $fecha, $idIncidencia);
 
 
-    if ($sentenciaInc->execute()) {
+    if ($sentenciaAct->execute()) {
     echo "<div class='card mt-3 bg-success bg-opacity-25'>";
     echo "<div class='card-body d-flex justify-content-center align-items-center gap-3 flex-wrap'>";
     echo "<p>Actuacio registrada</p>";
